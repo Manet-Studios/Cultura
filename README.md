@@ -1,2 +1,2 @@
 # Cultura
-A game for the serious games competition that focuses on educating its players on why early cultures developed the way they did by allowing the play to build and maintain an early civilization.
+A game for the SGS&S Challenge that focuses on educating its players on why early cultures developed the way they did by allowing the player to build and maintain an early civilization. Along with core city building features, the gameplay centers around accumulation and use of Culture Points to develop a unique society.
