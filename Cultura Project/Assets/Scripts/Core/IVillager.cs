@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Cultura.Units
 {
-    public interface IVillager
+    public interface IVillager : ISelectable
     {
         int CurrentHealth { get; set; }
         int MaximumHealth { get; set; }
@@ -12,7 +12,7 @@ namespace Cultura.Units
         float CurrentProductivity { get; set; }
         float MaximumProductivity { get; set; }
 
-        int HungerLevel { get; set; }
+        int CurrentHungerLevel { get; set; }
         int MaximumHungerLevel { get; set; }
 
         float CurrentHappinessLevel { get; set; }
