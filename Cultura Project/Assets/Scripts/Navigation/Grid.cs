@@ -19,10 +19,7 @@ namespace Cultura.Navigation
 
         private float nodeDiameter;
         private List<Tilemap> walkableTilemaps;
-
-        public List<Node> path = new List<Node>();
-
-        public bool displayExclusivelyPathGizmos;
+        public bool displayGizmos;
 
         public int MaxSize
         {
@@ -32,7 +29,7 @@ namespace Cultura.Navigation
             }
         }
 
-        private void Start()
+        private void Awake()
         {
             nodeDiameter = nodeRadius * 2f;
             GenerateGrid();
@@ -105,42 +102,24 @@ namespace Cultura.Navigation
         {
             Gizmos.DrawWireCube(transform.position, new Vector3(worldSize.x, worldSize.y));
 
-            if (!displayExclusivelyPathGizmos)
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            if (displayGizmos && grid != null)
             {
-                Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Node playerNode = NodeFromWorldPoint(mousePos);
 
-                if (grid != null)
+                foreach (Node n in grid)
                 {
-                    Node playerNode = NodeFromWorldPoint(mousePos);
+                    Gizmos.color = n.walkable ? Color.green : Color.red;
 
-                    foreach (Node n in grid)
-                    {
-                        Gizmos.color = n.walkable ? Color.green : Color.red;
-
-                        if (path != null)
-                        {
-                            if (path.Contains(n))
-                                Gizmos.color = Color.black;
-                        }
-                        Gizmos.DrawCube(new Vector3(n.worldPosition.x, n.worldPosition.y, 0), Vector3.one * (nodeDiameter - .1f));
-                    }
-
-                    Gizmos.color = Color.yellow;
-                    Gizmos.DrawSphere(mousePos, .1f);
-
-                    Gizmos.color = Color.cyan;
-                    Gizmos.DrawSphere(new Vector3(playerNode.worldPosition.x, playerNode.worldPosition.y, 0), .25f);
+                    Gizmos.DrawCube(new Vector3(n.worldPosition.x, n.worldPosition.y, 0), Vector3.one * (nodeDiameter - .1f));
                 }
-            }
-            else
-            {
-                if (path != null)
-                {
-                    for (int i = 0; i < path.Count; i++)
-                    {
-                        Gizmos.DrawCube(new Vector3(path[i].worldPosition.x, path[i].worldPosition.y, 0), Vector3.one * (nodeDiameter - .1f));
-                    }
-                }
+
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawSphere(mousePos, .1f);
+
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawSphere(new Vector3(playerNode.worldPosition.x, playerNode.worldPosition.y, 0), .25f);
             }
         }
     }
