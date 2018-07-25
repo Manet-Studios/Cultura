@@ -41,19 +41,16 @@ namespace Cultura.Construction
             }
         }
 
-        public bool Collect(Inventory inv)
+        public void Collect(Inventory inv, int amount)
         {
-            if (ResourceAmount < 1) return false;
-
-            inv.DepositResource(resource, 1);
-            ResourceAmount--;
+            Debug.Log("Amount remaining : " + ResourceAmount);
+            inv.DepositResource(resource, amount);
+            ResourceAmount -= amount;
 
             if (ResourceAmount < 1)
             {
                 TriggerDestruction();
             }
-
-            return true;
         }
 
         private void TriggerDestruction()

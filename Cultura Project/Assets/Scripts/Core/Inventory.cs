@@ -32,14 +32,20 @@ namespace Cultura.Core
         /// <returns>Amount of excess resources that can't be deposited into this inventory</returns>
         public int DepositResource(Resource resourceType, int resourceAmount)
         {
-            int excess = Mathf.Max(0, resourceDictionary[resourceType].limit - (resourceDictionary[resourceType].quantity + resourceAmount));
+            if (resourceAmount < 0)
+            {
+                Debug.Log(resourceAmount);
+                return resourceAmount;
+            }
+            int spaceRemaining = resourceDictionary[resourceType].limit - resourceDictionary[resourceType].quantity;
+            int excess = resourceAmount - spaceRemaining;
 
-            resourceDictionary[resourceType].quantity += (resourceAmount - excess);
+            resourceDictionary[resourceType].quantity += Math.Min(spaceRemaining, resourceAmount);
 
             if (UpdateSupplyLevelEventHandler != null)
                 UpdateSupplyLevelEventHandler(resourceType, resourceDictionary[resourceType].quantity);
 
-            return excess;
+            return Mathf.Max(0, excess);
         }
 
         /// <summary>

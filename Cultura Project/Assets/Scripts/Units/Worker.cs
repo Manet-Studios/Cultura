@@ -18,6 +18,8 @@ namespace Cultura.Units
         [SerializeField]
         private ResourceDeposit targetDeposit;
 
+        public int productivity;
+
         public Inventory Inventory
         {
             get
@@ -57,14 +59,9 @@ namespace Cultura.Units
             }
         }
 
-        protected override void Start()
-        {
-            base.Start();
-        }
-
         public void GatherResources()
         {
-            TargetDeposit.Collect(Inventory);
+            TargetDeposit.Collect(Inventory, productivity);
         }
 
         public void DepositResources()

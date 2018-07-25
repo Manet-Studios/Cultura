@@ -28,7 +28,7 @@ namespace Cultura.Units.Tasks
         public override TaskStatus OnUpdate()
         {
             if (ResourceDeposit != null)
-                ResourceDeposit.Collect(gatherer.Inventory);
+                gatherer.GatherResources();
             return ResourceDeposit == null || gatherer.Inventory.AtResourceCapacity((Core.Resource)resource.Value) ? TaskStatus.Success : TaskStatus.Running;
         }
     }

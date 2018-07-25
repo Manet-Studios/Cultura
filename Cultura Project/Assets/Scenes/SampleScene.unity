@@ -461,6 +461,7 @@ MonoBehaviour:
   targetPosition: {fileID: 1778783503}
   targetRepository: {fileID: 0}
   targetDeposit: {fileID: 1778783504}
+  productivity: 2
 --- !u!212 &240727267
 SpriteRenderer:
   m_ObjectHideFlags: 0
