@@ -59,6 +59,18 @@ namespace Cultura.Units
             }
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                AssignCommand(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                AssignCommand(1);
+            }
+        }
+
         public void GatherResources()
         {
             TargetDeposit.Collect(Inventory, productivity);

@@ -37,13 +37,13 @@ namespace Cultura.Core
                 Debug.Log(resourceAmount);
                 return resourceAmount;
             }
-            int spaceRemaining = resourceDictionary[resourceType].limit - resourceDictionary[resourceType].quantity;
+            int spaceRemaining = resourceDictionary[resourceType].Limit - resourceDictionary[resourceType].Quantity;
             int excess = resourceAmount - spaceRemaining;
 
-            resourceDictionary[resourceType].quantity += Math.Min(spaceRemaining, resourceAmount);
+            resourceDictionary[resourceType].Quantity += Math.Min(spaceRemaining, resourceAmount);
 
             if (UpdateSupplyLevelEventHandler != null)
-                UpdateSupplyLevelEventHandler(resourceType, resourceDictionary[resourceType].quantity);
+                UpdateSupplyLevelEventHandler(resourceType, resourceDictionary[resourceType].Quantity);
 
             return Mathf.Max(0, excess);
         }
@@ -56,12 +56,12 @@ namespace Cultura.Core
         /// <returns>Amount of resources that can be withdrawn from this inventory</returns>
         public int WithdrawResource(Resource resourceType, int resourceAmount)
         {
-            int withDrawAmount = Mathf.Min(resourceDictionary[resourceType].quantity, resourceAmount);
+            int withDrawAmount = Mathf.Min(resourceDictionary[resourceType].Quantity, resourceAmount);
 
-            resourceDictionary[resourceType].quantity -= withDrawAmount;
+            resourceDictionary[resourceType].Quantity -= withDrawAmount;
 
             if (UpdateSupplyLevelEventHandler != null)
-                UpdateSupplyLevelEventHandler(resourceType, resourceDictionary[resourceType].quantity);
+                UpdateSupplyLevelEventHandler(resourceType, resourceDictionary[resourceType].Quantity);
 
             return withDrawAmount;
         }
@@ -69,17 +69,17 @@ namespace Cultura.Core
         public void TransferContentsToInventory(Inventory targetInventory)
         {
             int excessWood = targetInventory.DepositResource(Resource.Wood,
-                WithdrawResource(Resource.Wood, resourceDictionary[Resource.Wood].limit));
+                WithdrawResource(Resource.Wood, resourceDictionary[Resource.Wood].Limit));
 
             DepositResource(Resource.Wood, excessWood);
 
             int excessStone = targetInventory.DepositResource(Resource.Stone,
-                WithdrawResource(Resource.Stone, resourceDictionary[Resource.Stone].limit));
+                WithdrawResource(Resource.Stone, resourceDictionary[Resource.Stone].Limit));
 
             DepositResource(Resource.Stone, excessStone);
 
             int excessMetal = targetInventory.DepositResource(Resource.Metal,
-                WithdrawResource(Resource.Metal, resourceDictionary[Resource.Metal].limit));
+                WithdrawResource(Resource.Metal, resourceDictionary[Resource.Metal].Limit));
 
             DepositResource(Resource.Metal, excessMetal);
         }
@@ -89,17 +89,56 @@ namespace Cultura.Core
             TransferContentsToInventory(targetRepository.Inventory);
         }
 
+        public void AddCapacity(Resource resource, int capacity)
+        {
+            resourceDictionary[resource].Limit += capacity;
+        }
+
+        public void RemoveCapacity(Resource resource, int capacity)
+        {
+            resourceDictionary[resource].Limit -= capacity;
+        }
+
         [System.Serializable]
         public class StorageUnit
         {
-            public int quantity;
-            public int limit;
+            [SerializeField]
+            private int quantity;
+
+            [SerializeField]
+            private int limit;
 
             public bool AtCapacity
             {
                 get
                 {
-                    return quantity == limit;
+                    return Quantity == Limit;
+                }
+            }
+
+            public int Limit
+            {
+                get
+                {
+                    return limit;
+                }
+
+                set
+                {
+                    limit = Mathf.Clamp(value, 1, int.MaxValue);
+                }
+            }
+
+            public int Quantity
+            {
+                get
+                {
+                    return quantity;
+                }
+
+                set
+                {
+                    quantity = Mathf.Clamp(value, 0, Limit);
                 }
             }
         }

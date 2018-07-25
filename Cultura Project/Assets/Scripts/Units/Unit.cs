@@ -4,11 +4,15 @@ using UnityEngine;
 using Cultura.Navigation;
 using System;
 using Cultura.Core;
+using Sirenix.Serialization;
 
 namespace Cultura.Units
 {
     public class Unit : Selectable
     {
+        [OdinSerialize]
+        private ICommand[] assignableCommands;
+
         public float speed;
 
         private Vector2[] path;
@@ -18,9 +22,17 @@ namespace Cultura.Units
         [SerializeField]
         private Transform targetPosition;
 
+        protected BehaviorDesigner.Runtime.BehaviorTree tree;
+
         protected override void Start()
         {
             base.Start();
+            tree = GetComponent<BehaviorDesigner.Runtime.BehaviorTree>();
+
+            for (int i = 0; i < assignableCommands.Length; i++)
+            {
+                assignableCommands[i].BehaviorTree = tree;
+            }
         }
 
         public void FindPath(Vector3 targetPosition, Action<bool> findPathCallback, Action completePathCallback)
@@ -64,5 +76,50 @@ namespace Cultura.Units
                 yield return null;
             }
         }
+
+        public void AssignCommand(int commandIndex)
+        {
+            ICommand command = assignableCommands[commandIndex];
+
+            if (command.Type == CommandType.Position)
+            {
+                IPositionCommand positionCommand = (IPositionCommand)command;
+                Debug.Log("Assigned : " + positionCommand.CommandID);
+
+                SelectionManager.Instance.StartTargetedPositionSelection(positionCommand.OnRecieveInformation, positionCommand.OnCancelCommand);
+            }
+            else if (command.Type == CommandType.Transform)
+            {
+                ITransformCommand transformCommand = (ITransformCommand)command;
+                Debug.Log("Assigned : " + transformCommand.CommandID);
+
+                SelectionManager.Instance.StartTargetedSelection(transformCommand.Target, transformCommand.OnRecieveInformation,
+                    transformCommand.OnCancelCommand);
+            }
+        }
+    }
+
+    public enum CommandType
+    { Position, Transform }
+
+    public interface ICommand
+    {
+        CommandType Type { get; }
+        string CommandID { get; }
+        BehaviorDesigner.Runtime.BehaviorTree BehaviorTree { set; }
+
+        void OnCancelCommand();
+    }
+
+    public interface IPositionCommand : ICommand
+    {
+        void OnRecieveInformation(Vector2 pos);
+    }
+
+    public interface ITransformCommand : ICommand
+    {
+        SelectionMode Target { get; }
+
+        void OnRecieveInformation(Transform obj);
     }
 }

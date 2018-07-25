@@ -87,5 +87,15 @@ namespace Cultura.Core
         {
             Instance = this;
         }
+
+        public void AddResourceCapacity(Resource resource, int capacity)
+        {
+            inventory.AddCapacity(resource, capacity);
+        }
+
+        public void RemoveResourceCapacity(Resource resource, int capacity)
+        {
+            inventory.RemoveCapacity(resource, capacity);
+        }
     }
 }

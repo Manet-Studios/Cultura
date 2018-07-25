@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Cultura.Construction
 {
     [RequireComponent(typeof(Collider2D))]
-    public class ResourceDeposit : Selectable, ISelectable
+    public class ResourceDeposit : Selectable
     {
         [SerializeField]
         private Resource resource;

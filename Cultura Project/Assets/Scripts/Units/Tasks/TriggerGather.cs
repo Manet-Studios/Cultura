@@ -20,7 +20,6 @@ namespace Cultura.Units.Tasks
         {
             if (gatherer.TargetDeposit != null)
             {
-                targetPos.Value = gatherer.TargetDeposit.transform.position;
                 return TaskStatus.Success;
             }
             return TaskStatus.Failure;
