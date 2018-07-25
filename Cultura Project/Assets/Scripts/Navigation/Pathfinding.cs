@@ -25,9 +25,6 @@ namespace Cultura.Navigation
             Vector2[] waypoints = new Vector2[0];
             bool pathSuccess = false;
 
-            Stopwatch sw = new Stopwatch();
-            sw.Start();
-
             Node startNode = grid.NodeFromWorldPoint(startPosition);
             Node targetNode = grid.NodeFromWorldPoint(targetPosition);
 
@@ -36,38 +33,33 @@ namespace Cultura.Navigation
 
             openSet.Add(startNode);
 
-            if (startNode.walkable && targetNode.walkable)
+            while (openSet.Count > 0)
             {
-                while (openSet.Count > 0)
+                Node currentNode = openSet.RemoveFirst();
+                closedSet.Add(currentNode);
+
+                if (currentNode == targetNode)
                 {
-                    Node currentNode = openSet.RemoveFirst();
-                    closedSet.Add(currentNode);
+                    pathSuccess = true;
+                    break;
+                }
 
-                    if (currentNode == targetNode)
+                foreach (Node neighbour in grid.GetNeighours(currentNode))
+                {
+                    if (!neighbour.walkable || closedSet.Contains(neighbour)) continue;
+
+                    int newMovementCost = GetDistance(currentNode, neighbour) + currentNode.gCost;
+                    bool neighbourWithinOpenSet = openSet.Contains(neighbour);
+                    if (newMovementCost < neighbour.gCost || !neighbourWithinOpenSet)
                     {
-                        sw.Stop();
-                        print("pathFound : " + sw.ElapsedMilliseconds + " ms");
-                        pathSuccess = true;
-                        break;
-                    }
+                        neighbour.gCost = newMovementCost;
+                        neighbour.hCost = GetDistance(neighbour, targetNode);
+                        neighbour.parent = currentNode;
 
-                    foreach (Node neighbour in grid.GetNeighours(currentNode))
-                    {
-                        if (!neighbour.walkable || closedSet.Contains(neighbour)) continue;
-
-                        int newMovementCost = GetDistance(currentNode, neighbour) + currentNode.gCost;
-                        bool neighbourWithinOpenSet = openSet.Contains(neighbour);
-                        if (newMovementCost < neighbour.gCost || !neighbourWithinOpenSet)
+                        if (!neighbourWithinOpenSet)
                         {
-                            neighbour.gCost = newMovementCost;
-                            neighbour.hCost = GetDistance(neighbour, targetNode);
-                            neighbour.parent = currentNode;
-
-                            if (!neighbourWithinOpenSet)
-                            {
-                                openSet.Add(neighbour);
-                                openSet.UpdateItem(neighbour);
-                            }
+                            openSet.Add(neighbour);
+                            openSet.UpdateItem(neighbour);
                         }
                     }
                 }

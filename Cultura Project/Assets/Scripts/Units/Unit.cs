@@ -3,34 +3,46 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cultura.Navigation;
 using System;
+using Cultura.Core;
 
 namespace Cultura.Units
 {
-    public class Unit : MonoBehaviour
+    public class Unit : Selectable
     {
-        public Transform target;
         public float speed;
 
         private Vector2[] path;
         private int targetIndex;
         private Coroutine followPathCoroutine;
 
-        public void Start()
+        [SerializeField]
+        private Transform targetPosition;
+
+        protected override void Start()
         {
-            PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+            base.Start();
         }
 
-        private void OnPathFound(Vector2[] newPath, bool success)
+        public void FindPath(Vector3 targetPosition, Action<bool> findPathCallback, Action completePathCallback)
+        {
+            PathRequestManager.RequestPath(transform.position, targetPosition,
+                (v2, b) => OnPathFound(v2, b, findPathCallback, completePathCallback));
+        }
+
+        private void OnPathFound(Vector2[] newPath, bool success, Action<bool> findPathCallback, Action completePathCallback)
         {
             if (success)
             {
+                findPathCallback(true);
+
                 path = newPath;
                 if (followPathCoroutine != null) StopCoroutine(followPathCoroutine);
-                followPathCoroutine = StartCoroutine(FollowPath());
+                followPathCoroutine = StartCoroutine(FollowPath(completePathCallback));
             }
+            else findPathCallback(false);
         }
 
-        private IEnumerator FollowPath()
+        private IEnumerator FollowPath(Action completePathCallback)
         {
             Vector2 currentWaypoint = path[0];
 
@@ -39,7 +51,11 @@ namespace Cultura.Units
                 if ((Vector2)transform.position == currentWaypoint)
                 {
                     targetIndex++;
-                    if (targetIndex >= path.Length) yield break;
+                    if (targetIndex >= path.Length)
+                    {
+                        completePathCallback();
+                        yield break;
+                    }
 
                     currentWaypoint = path[targetIndex];
                 }

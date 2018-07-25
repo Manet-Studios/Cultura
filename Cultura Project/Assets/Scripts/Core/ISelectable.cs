@@ -1,4 +1,4 @@
-﻿namespace Cultura.Units
+﻿namespace Cultura.Core
 {
     public interface ISelectable
     {

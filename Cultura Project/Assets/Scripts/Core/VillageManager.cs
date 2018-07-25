@@ -1,12 +1,20 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
+using Sirenix.Serialization;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Cultura.Core
 {
-    public class VillageManager : MonoBehaviour
+    public class VillageManager : SerializedMonoBehaviour
     {
+        public static VillageManager Instance;
+
+        [NonSerialized]
+        [OdinSerialize]
+        public Inventory inventory;
+
         [SerializeField]
         private int unitCount;
 
@@ -73,6 +81,11 @@ namespace Cultura.Core
         // Update is called once per frame
         private void Update()
         {
+        }
+
+        private void Awake()
+        {
+            Instance = this;
         }
     }
 }

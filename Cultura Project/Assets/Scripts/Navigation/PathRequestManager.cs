@@ -19,7 +19,6 @@ namespace Cultura.Navigation
         {
             pathRequestQueue = new Queue<PathRequest>();
             instance = this;
-            Debug.Log(instance);
             pathfinding = GetComponent<Pathfinding>();
         }
 
@@ -28,8 +27,7 @@ namespace Cultura.Navigation
             if (instance == null) instance = FindObjectOfType<PathRequestManager>();
 
             PathRequest newRequest = new PathRequest(pathStart, pathEnd, callback);
-            Debug.Log(instance);
-            Debug.Log(instance.pathRequestQueue);
+
             instance.pathRequestQueue.Enqueue(newRequest);
             instance.TryProcessNext();
         }

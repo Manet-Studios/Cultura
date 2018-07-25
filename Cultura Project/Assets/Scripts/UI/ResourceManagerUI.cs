@@ -17,30 +17,33 @@ namespace Cultura.UI
         [SerializeField]
         private TextMeshProUGUI metalText;
 
-        private Core.ResourceManager resourceManager;
+        private Core.VillageManager villageManager;
 
-        // Use this for initialization
         private void Start()
         {
-            resourceManager = FindObjectOfType<Core.ResourceManager>();
-            resourceManager.UpdateWoodSupplyLevelEventHandler += OnWoodSupplyUpdate;
-            resourceManager.UpdateStoneSupplyLevelEventHandler += OnStoneSupplyUpdate;
-            resourceManager.UpdateMetalSupplyLevelEventHandler += OnMetalSupplyUpdate;
+            villageManager = FindObjectOfType<Core.VillageManager>();
+            villageManager.inventory.UpdateSupplyLevelEventHandler += OnSupplyUpdate;
         }
 
-        private void OnMetalSupplyUpdate(int metalSupplyLevel)
+        private void OnSupplyUpdate(Core.Resource resource, int resourceAmount)
         {
-            metalText.text = metalSupplyLevel.ToString();
-        }
+            switch (resource)
+            {
+                case Core.Resource.Wood:
+                    woodText.text = resourceAmount.ToString();
 
-        private void OnStoneSupplyUpdate(int stoneSupplyLevel)
-        {
-            stoneText.text = stoneSupplyLevel.ToString();
-        }
+                    break;
 
-        private void OnWoodSupplyUpdate(int woodSupplyLevel)
-        {
-            woodText.text = woodSupplyLevel.ToString();
+                case Core.Resource.Stone:
+
+                    stoneText.text = resourceAmount.ToString();
+                    break;
+
+                case Core.Resource.Metal:
+                    metalText.text = resourceAmount.ToString();
+
+                    break;
+            }
         }
     }
 }
