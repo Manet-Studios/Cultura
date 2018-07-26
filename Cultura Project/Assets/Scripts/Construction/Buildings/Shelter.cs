@@ -141,7 +141,7 @@ namespace Cultura.Construction
 
         public virtual void OnBuild()
         {
-            villageManager = FindObjectOfType<Cultura.Core.VillageManager>();
+            villageManager = VillageManager.Instance;
             villageManager.UnitCountEventHandler += OnUnitCountUpdate;
             villageManager.UnitCapacity += UnitCapacity;
 

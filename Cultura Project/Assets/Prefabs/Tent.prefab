@@ -36,8 +36,8 @@ GameObject:
   - component: {fileID: 4017752385667338}
   - component: {fileID: 212168940708297524}
   - component: {fileID: 114919471573650356}
-  - component: {fileID: 61177679416356094}
   - component: {fileID: 114642146564971544}
+  - component: {fileID: 60004929714135840}
   m_Layer: 11
   m_Name: Tent
   m_TagString: Untagged
@@ -52,7 +52,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1793157937737604}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4478302362889084}
@@ -72,8 +72,8 @@ Transform:
   m_Father: {fileID: 4017752385667338}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61177679416356094
-BoxCollider2D:
+--- !u!60 &60004929714135840
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -87,16 +87,38 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 0.2, y: 0.2}
+    pivot: {x: 0.5, y: 0.125}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 2, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.25, y: -0.03125}
+      - {x: 0.40625, y: 0.28125}
+      - {x: 0.40625, y: 0.609375}
+      - {x: 0.328125, y: 0.796875}
+      - {x: 0.25, y: 0.859375}
+      - {x: 0.359375, y: 1.234375}
+      - {x: 0.34375, y: 1.375}
+      - {x: 0.3125, y: 1.40625}
+      - {x: -0.203125, y: 1.40625}
+      - {x: -0.265625, y: 1.359375}
+      - {x: -0.359375, y: 1.265625}
+      - {x: -0.34375, y: 1}
+      - {x: -0.296875, y: 0.921875}
+      - {x: -0.421875, y: 0.765625}
+      - {x: -0.46875, y: 0.5625}
+      - {x: -0.46875, y: 0.296875}
+      - {x: -0.3125, y: 0.25}
+      - {x: -0.3125, y: -0.015625}
+      - {x: -0.28125, y: -0.03125}
+      - {x: -0.0625, y: -0.03125}
+      - {x: -0.078125, y: 0.109375}
+      - {x: 0.03125, y: 0.203125}
+      - {x: 0.03125, y: -0.03125}
 --- !u!114 &114642146564971544
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -118,7 +140,13 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes:
     - Name: inventoryUsed
+      Entry: 7
+      Data: 0|Cultura.Core.Inventory, Assembly-CSharp
+    - Name: resourceDictionary
       Entry: 6
+      Data: 
+    - Name: 
+      Entry: 8
       Data: 
   depositInPlayerInventory: 1
 --- !u!114 &114919471573650356
@@ -168,7 +196,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 5adcc147b1587a9408ec52750d7a43c6, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -185,15 +213,15 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -431097633
-  m_SortingLayer: 1
+  m_SortingLayerID: 459124567
+  m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 77ad1967e5183be4dae236a88ba70cad, type: 3}
-  m_Color: {r: 1, g: 0.6812683, b: 0, a: 1}
+  m_Sprite: {fileID: 21300002, guid: a9fc29aff65ef84419f0bcb97a7f64da, type: 3}
+  m_Color: {r: 1, g: 0.09920767, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.2, y: 0.2}
+  m_Size: {x: 2, y: 2}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

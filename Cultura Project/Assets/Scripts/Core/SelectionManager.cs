@@ -116,17 +116,13 @@ namespace Cultura.Core
                     {
                         if (targetingSelection)
                         {
-                            targetingSelection = false;
-                            if (onCancelCallback != null) onCancelCallback();
-                            ResetCallbacks();
+                            CancelSelection();
                         }
                     }
                 }
                 else if (targetingSelection && Input.GetKeyDown(KeyCode.Escape))
                 {
-                    targetingSelection = false;
-                    if (onCancelCallback != null) onCancelCallback();
-                    ResetCallbacks();
+                    CancelSelection();
                 }
             }
             else
@@ -134,23 +130,28 @@ namespace Cultura.Core
                 if (Input.GetKeyDown(KeyCode.Mouse0))
                 {
                     selectingLocation = false;
-
                     if (onSelectPositionCallback != null) onSelectPositionCallback(cursorPosition);
                     ResetCallbacks();
                 }
                 else if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    selectingLocation = false;
-                    if (onCancelCallback != null) onCancelCallback();
-                    ResetCallbacks();
+                    CancelSelection();
                 }
             }
         }
 
-        private void ResetCallbacks()
+        public void CancelSelection()
         {
             SelectionMode = SelectionMode.Any;
+            if (onCancelCallback != null) onCancelCallback();
+            targetingSelection = false;
 
+            selectingLocation = false;
+            ResetCallbacks();
+        }
+
+        private void ResetCallbacks()
+        {
             onSelectCallback = null;
             onSelectPositionCallback = null;
             onCancelCallback = null;
