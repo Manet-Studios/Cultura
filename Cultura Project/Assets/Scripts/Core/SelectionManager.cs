@@ -95,12 +95,16 @@ namespace Cultura.Core
                     if (coll != null)
                     {
                         ISelectable selectable = coll.GetComponent<ISelectable>();
-                        selectable.OnSelect();
-                        currentlySelectedObjects.Add(selectable);
+                        if (selectable != null)
+                        {
+                            selectable.OnSelect();
+                            currentlySelectedObjects.Add(selectable);
+                        }
+
                         if (targetingSelection)
                         {
                             targetingSelection = false;
-                            onSelectCallback(coll.transform);
+                            if (onSelectCallback != null) onSelectCallback(coll.transform);
                             ResetCallbacks();
                         }
                     }
@@ -109,7 +113,7 @@ namespace Cultura.Core
                         if (targetingSelection)
                         {
                             targetingSelection = false;
-                            onCancelCallback();
+                            if (onCancelCallback != null) onCancelCallback();
                             ResetCallbacks();
                         }
                     }
@@ -117,7 +121,7 @@ namespace Cultura.Core
                 else if (targetingSelection && Input.GetKeyDown(KeyCode.Escape))
                 {
                     targetingSelection = false;
-                    onCancelCallback();
+                    if (onCancelCallback != null) onCancelCallback();
                     ResetCallbacks();
                 }
             }
@@ -127,13 +131,13 @@ namespace Cultura.Core
                 {
                     selectingLocation = false;
 
-                    onSelectPositionCallback(cursorPosition);
+                    if (onSelectPositionCallback != null) onSelectPositionCallback(cursorPosition);
                     ResetCallbacks();
                 }
                 else if (Input.GetKeyDown(KeyCode.Escape))
                 {
                     selectingLocation = false;
-                    onCancelCallback();
+                    if (onCancelCallback != null) onCancelCallback();
                     ResetCallbacks();
                 }
             }
