@@ -37,6 +37,7 @@ namespace Cultura.Core
         private void OnMouseEnter()
         {
             mouseHovering = true;
+            Debug.Log(gameObject.name + " Hovered");
             if (Selected) return;
 
             propertyBlock.SetColor("_Color", selectionManager.hoveredOutlineColor);

@@ -72,8 +72,12 @@ namespace Cultura.Core
                         selectedMask = terrainLayers;
                         break;
                 }
+
+                if (SelectionModeChangeEventHandler != null) SelectionModeChangeEventHandler(selectionMode);
             }
         }
+
+        public event Action<SelectionMode> SelectionModeChangeEventHandler;
 
         private List<ISelectable> currentlySelectedObjects = new List<ISelectable>();
         private LayerMask selectedMask;
@@ -167,6 +171,11 @@ namespace Cultura.Core
 
             this.onSelectPositionCallback = onSelectPositionCallback;
             this.onCancelCallback = onCancelCallback;
+        }
+
+        public void SetSelectionMode(int mode)
+        {
+            SelectionMode = (SelectionMode)mode;
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Cultura.Core
 
         private void OnFindBuildPosition(Vector2 pos)
         {
-            Instantiate(buildingRegistry.buildings[0], new Vector3((int)pos.x, (int)pos.y, 0), Quaternion.identity);
+            Instantiate(buildingRegistry.buildings[0], new Vector3(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y), 0), Quaternion.identity);
         }
     }
 }

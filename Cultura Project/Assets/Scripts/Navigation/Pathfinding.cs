@@ -87,6 +87,7 @@ namespace Cultura.Navigation
                 path.Add(currentNode);
                 currentNode = currentNode.parent;
             }
+            path.Add(startNode);
             Vector2[] waypoints = SimplifyPath(path);
             Array.Reverse(waypoints);
             return waypoints;
@@ -100,7 +101,7 @@ namespace Cultura.Navigation
             for (int i = 1; i < path.Count; i++)
             {
                 Vector2 directionNew = new Vector2(path[i - 1].gridX - path[i].gridX, path[i - 1].gridY - path[i].gridY);
-
+                UnityEngine.Debug.DrawLine(path[i - 1].worldPosition, path[i].worldPosition, Color.yellow, 10f);
                 if (directionNew != directionOld)
                 {
                     waypoints.Add(path[i - 1].worldPosition);

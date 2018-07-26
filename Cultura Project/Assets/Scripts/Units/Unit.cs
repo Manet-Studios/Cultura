@@ -35,6 +35,19 @@ namespace Cultura.Units
             }
         }
 
+        protected virtual void Update()
+        {
+            if (!Selected) return;
+            if (Input.GetKeyDown(KeyCode.Alpha1))
+            {
+                AssignCommand(0);
+            }
+            else if (Input.GetKeyDown(KeyCode.Alpha2))
+            {
+                AssignCommand(1);
+            }
+        }
+
         public void FindPath(Vector3 targetPosition, Action<bool> findPathCallback, Action completePathCallback)
         {
             PathRequestManager.RequestPath(transform.position, targetPosition,
@@ -56,6 +69,7 @@ namespace Cultura.Units
 
         private IEnumerator FollowPath(Action completePathCallback)
         {
+            targetIndex = 0;
             Vector2 currentWaypoint = path[0];
 
             while (true)
@@ -97,29 +111,18 @@ namespace Cultura.Units
                     transformCommand.OnCancelCommand);
             }
         }
-    }
 
-    public enum CommandType
-    { Position, Transform }
+        private void OnDrawGizmos()
+        {
+            if (path != null)
+            {
+                Gizmos.color = Color.black;
 
-    public interface ICommand
-    {
-        CommandType Type { get; }
-        string CommandID { get; }
-        BehaviorDesigner.Runtime.BehaviorTree BehaviorTree { set; }
-
-        void OnCancelCommand();
-    }
-
-    public interface IPositionCommand : ICommand
-    {
-        void OnRecieveInformation(Vector2 pos);
-    }
-
-    public interface ITransformCommand : ICommand
-    {
-        SelectionMode Target { get; }
-
-        void OnRecieveInformation(Transform obj);
+                for (int i = 1; i < path.Length; i++)
+                {
+                    Gizmos.DrawLine(path[i - 1], path[i]);
+                }
+            }
+        }
     }
 }

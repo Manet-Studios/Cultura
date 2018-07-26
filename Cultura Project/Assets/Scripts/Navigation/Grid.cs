@@ -66,11 +66,16 @@ namespace Cultura.Navigation
             Vector2 bottomLeft = (Vector2)transform.position - ((Vector2)worldSize * .5f);
 
             Vector3Int gridPos = walkableTilemaps[0].WorldToCell(position);
-            float percentX = Mathf.Clamp01((gridPos.x - bottomLeft.x) / worldSize.x);
-            float percentY = Mathf.Clamp01((gridPos.y - bottomLeft.y) / worldSize.y);
+            Debug.Log(" Norm Pos  : " + position);
 
-            int x = Mathf.Clamp((int)(percentX * (worldSize.x - 1)) + 1, 0, worldSize.x - 1);
-            int y = Mathf.Clamp((int)(percentY * (worldSize.y - 1)) + 1, 0, worldSize.y - 1);
+            Debug.Log(" Grid Pos  : " + gridPos);
+            Vector2 vector2 = new Vector2(gridPos.x, gridPos.y) - bottomLeft;
+            Debug.Log(" Node Pos  : " + vector2);
+
+            int x = (int)vector2.x;
+            int y = (int)vector2.y;
+            Debug.Log(" X Y  : " + new Vector2(x, y));
+
             return grid[x, y];
         }
 
@@ -106,8 +111,6 @@ namespace Cultura.Navigation
 
             if (displayGizmos && grid != null)
             {
-                Node playerNode = NodeFromWorldPoint(mousePos);
-
                 foreach (Node n in grid)
                 {
                     Gizmos.color = n.walkable ? Color.green : Color.red;
@@ -117,9 +120,6 @@ namespace Cultura.Navigation
 
                 Gizmos.color = Color.yellow;
                 Gizmos.DrawSphere(mousePos, .1f);
-
-                Gizmos.color = Color.cyan;
-                Gizmos.DrawSphere(new Vector3(playerNode.worldPosition.x, playerNode.worldPosition.y, 0), .25f);
             }
         }
     }
