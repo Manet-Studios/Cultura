@@ -27,13 +27,13 @@ public class CustomAssetPreProcessor : AssetPostprocessor
 
         if (lowerCaseAssetPath.IndexOf("/_preprocessing/") == -1)
             return;
-        Debug.Log("Failed");
+
         TextureImporter textureImporter = (TextureImporter)assetImporter;
 
         int endOfPath = lowerCaseAssetPath.LastIndexOf('/');
 
         string fileName = assetPath.Substring(endOfPath + 1);
-        //Debug.Log(fileName);
+
         int endOfName = fileName.LastIndexOf('.');
         string fullName = fileName;
         fileName = fileName.Substring(0, endOfName);
@@ -70,14 +70,11 @@ public class CustomAssetPreProcessor : AssetPostprocessor
         EditorApplication.delayCall += () =>
         {
             string newPath = "Assets/_Processed/" + fullName;
-            Debug.Log(assetPath);
-            Debug.Log(newPath);
             string error = AssetDatabase.MoveAsset(assetPath, newPath);
         };
     }
 
     public void OnPostprocessSprites(Texture2D texture, Sprite[] sprites)
     {
-        Debug.Log("Sprites: " + sprites.Length);
     }
 }

@@ -43,7 +43,6 @@ namespace Cultura.Construction
 
         public void Collect(Inventory inv, int amount)
         {
-            Debug.Log("Amount remaining : " + ResourceAmount);
             inv.DepositResource(resource, amount);
             ResourceAmount -= amount;
 

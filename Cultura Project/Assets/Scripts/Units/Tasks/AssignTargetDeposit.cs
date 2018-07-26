@@ -10,6 +10,7 @@ namespace Cultura.Units.Tasks
     {
         private IGatherer gatherer;
         public SharedTransform target;
+        public SharedVector2 targetPosition;
 
         public override void OnAwake()
         {
@@ -19,6 +20,7 @@ namespace Cultura.Units.Tasks
         public override TaskStatus OnUpdate()
         {
             gatherer.TargetDeposit = target.Value.GetComponent<Construction.ResourceDeposit>();
+            if (gatherer.TargetDeposit != null) targetPosition.Value = target.Value.position;
             return gatherer.TargetDeposit != null ? TaskStatus.Success : TaskStatus.Failure;
         }
     }
