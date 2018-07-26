@@ -19,9 +19,14 @@ namespace Cultura.Units.Tasks
 
         public override TaskStatus OnUpdate()
         {
-            gatherer.TargetDeposit = target.Value.GetComponent<Construction.ResourceDeposit>();
-            if (gatherer.TargetDeposit != null) targetPosition.Value = target.Value.position;
-            return gatherer.TargetDeposit != null ? TaskStatus.Success : TaskStatus.Failure;
+            if (target.Value != null)
+            {
+                gatherer.TargetDeposit = target.Value.GetComponent<Construction.ResourceDeposit>();
+                targetPosition.Value = target.Value.position;
+                return TaskStatus.Success;
+            }
+
+            return TaskStatus.Failure;
         }
     }
 }
