@@ -55,7 +55,7 @@ namespace Cultura.Core
 
             if (buildMode)
             {
-                blueprintTransform.position = mainCam.WorldToScreenPoint(Input.mousePosition) + (Vector3.forward * 10);
+                blueprintTransform.position = mainCam.ScreenToWorldPoint(Input.mousePosition) + (Vector3.forward * 10);
                 blueprintTransform.position = new Vector3((int)blueprintTransform.position.x, (int)blueprintTransform.position.y, 0);
             }
         }
@@ -68,7 +68,9 @@ namespace Cultura.Core
 
         private void StopBuildMode()
         {
-            selectionManager.CancelSelection();
+            buildMode = false;
+            if (selectionManager.SelectionMode == SelectionMode.Terrain) selectionManager.CancelSelection();
+            // if (blueprintTransform.gameObject.activeInHierarchy) selectionManager.CancelSelection();
             blueprintTransform.gameObject.SetActive(false);
         }
 
@@ -85,8 +87,6 @@ namespace Cultura.Core
         private void OnCancelBuilding()
         {
             StopBuildMode();
-
-            buildMode = false;
         }
 
         private void OnFindBuildPosition(Vector2 pos)

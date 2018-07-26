@@ -15,9 +15,11 @@ namespace Cultura.Core
 
         protected bool mouseHovering;
         protected Core.SelectionManager selectionManager;
+        private int outlineColorId;
 
         protected virtual void Start()
         {
+            outlineColorId = Shader.PropertyToID("_OutlineColor");
             Selected = false;
             selectionManager = Core.SelectionManager.Instance;
             spriteRenderer = GetComponent<SpriteRenderer>();
@@ -30,7 +32,7 @@ namespace Cultura.Core
         {
             spriteRenderer.GetPropertyBlock(propertyBlock);
 
-            propertyBlock.SetColor("_Color", selectionManager.normalOutlineColor);
+            propertyBlock.SetColor(outlineColorId, selectionManager.normalOutlineColor);
             spriteRenderer.SetPropertyBlock(propertyBlock);
         }
 
@@ -39,7 +41,7 @@ namespace Cultura.Core
             mouseHovering = true;
             if (Selected) return;
 
-            propertyBlock.SetColor("_Color", selectionManager.hoveredOutlineColor);
+            propertyBlock.SetColor(outlineColorId, selectionManager.hoveredOutlineColor);
             spriteRenderer.SetPropertyBlock(propertyBlock);
         }
 
@@ -47,13 +49,13 @@ namespace Cultura.Core
         {
             mouseHovering = false;
             if (Selected) return;
-            propertyBlock.SetColor("_Color", selectionManager.normalOutlineColor);
+            propertyBlock.SetColor(outlineColorId, selectionManager.normalOutlineColor);
             spriteRenderer.SetPropertyBlock(propertyBlock);
         }
 
         public void OnSelect()
         {
-            propertyBlock.SetColor("_Color", selectionManager.selectedObjectColor);
+            propertyBlock.SetColor(outlineColorId, selectionManager.selectedObjectColor);
             spriteRenderer.SetPropertyBlock(propertyBlock);
             Selected = true;
         }
@@ -62,7 +64,7 @@ namespace Cultura.Core
         {
             Selected = false;
 
-            propertyBlock.SetColor("_Color", mouseHovering ? selectionManager.hoveredOutlineColor : selectionManager.normalOutlineColor);
+            propertyBlock.SetColor(outlineColorId, mouseHovering ? selectionManager.hoveredOutlineColor : selectionManager.normalOutlineColor);
             spriteRenderer.SetPropertyBlock(propertyBlock);
         }
     }
