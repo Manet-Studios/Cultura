@@ -8,20 +8,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bae3d2d08f9f1f14f93d34e2dde1e754, type: 3}
+  m_Script: {fileID: 11500000, guid: 94d8ba241e4e552479bc8df6a679e627, type: 3}
   m_Name: Registry
   m_EditorClassIdentifier: 
   serializationData:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 1793157937737604, guid: b9a72a35de6719e4a86b0f09c0b4300f, type: 2}
+    - {fileID: 1066349232285568, guid: cc4b08ecb9e7cea4199d4d738f88fc1c, type: 2}
+    - {fileID: 1229568280373710, guid: 4c7543ff6bb6ef4418e49a5eade73a9b, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: buildings
+    - Name: buildingPrefabs
       Entry: 7
       Data: 0|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
         UnityEngine.CoreModule]], mscorlib
@@ -66,7 +67,19 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 3
       Data: 0
+    - Name: 
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 

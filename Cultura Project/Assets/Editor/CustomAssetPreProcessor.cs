@@ -44,6 +44,29 @@ public class CustomAssetPreProcessor : AssetPostprocessor
         {
             textureImporter.spriteImportMode = SpriteImportMode.Single;
         }
+        else if (nameFragments.Length == 2) //Animation
+        {
+            textureImporter.spriteImportMode = SpriteImportMode.Multiple;
+
+            int frames = Mathf.Max(texture.height, texture.width) / Mathf.Min(texture.height, texture.width);
+
+            int spriteWidth = texture.width / frames;
+            int spriteHeight = texture.height;
+
+            List<SpriteMetaData> metas = new List<SpriteMetaData>();
+
+            for (int r = 0; r < frames; ++r)
+            {
+                SpriteMetaData meta = new SpriteMetaData
+                {
+                    rect = new Rect(r * spriteWidth, 0, spriteWidth, spriteHeight),
+                    name = nameFragments[0] + " " + nameFragments[1] + " " + r
+                };
+                metas.Add(meta);
+            }
+
+            textureImporter.spritesheet = metas.ToArray();
+        }
         else if (nameFragments.Length == 3) //Animation
         {
             textureImporter.spriteImportMode = SpriteImportMode.Multiple;

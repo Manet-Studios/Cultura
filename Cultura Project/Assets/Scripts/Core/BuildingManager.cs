@@ -9,7 +9,7 @@ namespace Cultura.Core
     public class BuildingManager : MonoBehaviour
     {
         [SerializeField]
-        private PoolableObjectRegistry buildingRegistry;
+        private Registry buildingRegistry;
 
         private VillageManager villageManager;
         private SelectionManager selectionManager;
@@ -19,9 +19,22 @@ namespace Cultura.Core
         private int selectedBuilding = 0;
 
         [SerializeField]
-        private Transform blueprintTransform;
+        private SpriteRenderer blueprintTransform;
+
+        [SerializeField]
+        private LayerMask buildingLayerMask;
+
+        [SerializeField]
+        private Color placeableBlueprintColor;
+
+        [SerializeField]
+        private Color nonplaceableBlueprintColor;
+
+        [SerializeField]
+        private Color bluePrintColor;
 
         private Camera mainCam;
+        private Collider2D[] obstructingColliders = new Collider2D[2];
 
         // Use this for initialization
         private void Start()
@@ -55,22 +68,41 @@ namespace Cultura.Core
 
             if (buildMode)
             {
-                blueprintTransform.position = mainCam.ScreenToWorldPoint(Input.mousePosition) + (Vector3.forward * 10);
-                blueprintTransform.position = new Vector3((int)blueprintTransform.position.x, (int)blueprintTransform.position.y, 0);
+                Vector3 pos = mainCam.ScreenToWorldPoint(Input.mousePosition) + (Vector3.forward * 10);
+                Vector3 snappedPos = new Vector3((int)pos.x, (int)pos.y, 0);
+
+                blueprintTransform.transform.position = snappedPos;
+
+                int obstructingCount = Physics2D.OverlapBoxNonAlloc(snappedPos, blueprintTransform.bounds.size * .95f, 0, obstructingColliders, buildingLayerMask);
+
+                bool obstruction = obstructingCount > 0;
+
+                blueprintTransform.color = obstruction ? nonplaceableBlueprintColor : placeableBlueprintColor;
+
+                if (!obstruction && Input.GetKeyDown(KeyCode.Mouse0))
+                {
+                    OnFindBuildPosition(snappedPos);
+                }
+                else if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    StopBuildMode();
+                }
             }
         }
 
         private void StartBuildMode()
         {
-            selectionManager.StartTargetedPositionSelection(OnFindBuildPosition, OnCancelBuilding);
+            selectionManager.DisableSelection();
             blueprintTransform.gameObject.SetActive(true);
+            blueprintTransform.sprite = buildingRegistry.GetBuilding(selectedBuilding).BlueprintPrefab.GetComponent<SpriteRenderer>().sprite;
         }
 
         private void StopBuildMode()
         {
+            selectionManager.EnableSelection();
+
             buildMode = false;
-            if (selectionManager.SelectionMode == SelectionMode.Terrain) selectionManager.CancelSelection();
-            // if (blueprintTransform.gameObject.activeInHierarchy) selectionManager.CancelSelection();
+            // if (selectionManager.SelectionMode == SelectionMode.Terrain) selectionManager.CancelSelection();
             blueprintTransform.gameObject.SetActive(false);
         }
 
@@ -84,17 +116,19 @@ namespace Cultura.Core
             Destroy(obj.gameObject);
         }
 
-        private void OnCancelBuilding()
+        private void OnFindBuildPosition(Vector2 pos)
         {
+            IBuilding building = buildingRegistry.GetBuilding(selectedBuilding);
+            Instantiate(building.BlueprintPrefab, blueprintTransform.transform.position, Quaternion.identity).Initialize(building);
             StopBuildMode();
         }
 
-        private void OnFindBuildPosition(Vector2 pos)
+        private void OnDrawGizmos()
         {
-            StopBuildMode();
-            IBuilding building = Instantiate(buildingRegistry.buildings[0], new Vector3(Mathf.RoundToInt(pos.x), Mathf.RoundToInt(pos.y), 0), Quaternion.identity).GetComponent<IBuilding>();
-            building.OnBuild();
-            buildMode = false;
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireCube(blueprintTransform.transform.position, blueprintTransform.bounds.size);
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireCube(blueprintTransform.transform.position, blueprintTransform.bounds.size * .95f);
         }
     }
 }

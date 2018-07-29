@@ -12,7 +12,7 @@ namespace Cultura.Construction
         [SerializeField]
         private int unitCapacity;
 
-        [TabGroup("Construction Costs")]
+        [TabGroup("Construction")]
         [SerializeField]
         private ConstructionCosts constructionCost;
 
@@ -40,6 +40,10 @@ namespace Cultura.Construction
         [SerializeField]
         private int additionalFoodStorage;
 
+        [TabGroup("Construction")]
+        [SerializeField]
+        private BuildingBlueprint blueprintPrefab;
+
         private Cultura.Core.VillageManager villageManager;
 
         private Coroutine unitProductionCoroutine;
@@ -56,6 +60,14 @@ namespace Cultura.Construction
             set
             {
                 constructionCost = value;
+            }
+        }
+
+        public GameObject Prefab
+        {
+            get
+            {
+                return gameObject;
             }
         }
 
@@ -134,6 +146,19 @@ namespace Cultura.Construction
             set
             {
                 additionalFoodStorage = value;
+            }
+        }
+
+        public BuildingBlueprint BlueprintPrefab
+        {
+            get
+            {
+                return blueprintPrefab;
+            }
+
+            set
+            {
+                blueprintPrefab = value;
             }
         }
 

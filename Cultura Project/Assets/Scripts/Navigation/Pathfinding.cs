@@ -26,7 +26,7 @@ namespace Cultura.Navigation
             bool pathSuccess = false;
 
             Node startNode = grid.NodeFromWorldPoint(startPosition);
-            Node targetNode = grid.NodeFromWorldPoint(targetPosition);
+            Node targetNode = grid.GetNearestWalkableNode(grid.NodeFromWorldPoint(targetPosition), 5);
 
             Heap<Node> openSet = new Heap<Node>(grid.MaxSize);
             HashSet<Node> closedSet = new HashSet<Node>();

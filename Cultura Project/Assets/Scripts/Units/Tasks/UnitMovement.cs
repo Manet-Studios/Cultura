@@ -19,7 +19,6 @@ namespace Cultura.Units.Tasks
 
         public override void OnStart()
         {
-            Debug.Log("Start Path find");
             pathStatus = 0;
             completedPath = false;
             unit.FindPath(targetPosition.Value, OnFindPath, OnCompletePath);
@@ -28,14 +27,11 @@ namespace Cultura.Units.Tasks
         private void OnCompletePath()
         {
             completedPath = true;
-            Debug.Log("End Path find");
         }
 
         private void OnFindPath(bool pathFound)
         {
             pathStatus = pathFound ? 1 : -1;
-
-            Debug.Log("A Path find " + pathStatus);
         }
 
         public override TaskStatus OnUpdate()

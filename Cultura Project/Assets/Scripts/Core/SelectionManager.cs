@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Cultura.Core
 {
-    public enum SelectionMode { Any, Unit, Building, Resource, Terrain }
+    public enum SelectionMode { Any, Unit, Building, Blueprint, Resource, Terrain }
 
     public class SelectionManager : MonoBehaviour
     {
@@ -16,6 +16,7 @@ namespace Cultura.Core
         public LayerMask selectableLayers;
         public LayerMask unitLayers;
         public LayerMask buildingLayers;
+        public LayerMask blueprintLayers;
         public LayerMask resourceLayers;
         public LayerMask terrainLayers;
 
@@ -30,6 +31,8 @@ namespace Cultura.Core
 
         private bool targetingSelection;
         private bool selectingLocation = false;
+
+        private bool canSelect = true;
 
         public static SelectionManager Instance
         {
@@ -64,6 +67,10 @@ namespace Cultura.Core
                         selectedMask = buildingLayers;
                         break;
 
+                    case SelectionMode.Blueprint:
+                        selectedMask = blueprintLayers;
+                        break;
+
                     case SelectionMode.Resource:
                         selectedMask = resourceLayers;
                         break;
@@ -82,8 +89,15 @@ namespace Cultura.Core
         private List<ISelectable> currentlySelectedObjects = new List<ISelectable>();
         private LayerMask selectedMask;
 
+        private void Start()
+        {
+            canSelect = true;
+        }
+
         private void Update()
         {
+            if (!canSelect) return;
+
             Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             if (!selectingLocation)
             {
@@ -92,14 +106,15 @@ namespace Cultura.Core
                     Collider2D coll = Physics2D.OverlapPoint(cursorPosition, selectedMask);
                     foreach (ISelectable item in currentlySelectedObjects)
                     {
-                        item.OnDeselect();
+                        if (item != null)
+                            item.OnDeselect();
                     }
                     currentlySelectedObjects.Clear();
 
                     if (coll != null)
                     {
                         ISelectable selectable = coll.GetComponent<ISelectable>();
-                        if (selectable != null)
+                        if (selectable != null && !selectable.Selected)
                         {
                             selectable.OnSelect();
                             currentlySelectedObjects.Add(selectable);
@@ -152,6 +167,8 @@ namespace Cultura.Core
 
         private void ResetCallbacks()
         {
+            SelectionMode = SelectionMode.Any;
+
             onSelectCallback = null;
             onSelectPositionCallback = null;
             onCancelCallback = null;
@@ -163,6 +180,11 @@ namespace Cultura.Core
             SelectionMode = target;
             this.onSelectCallback = onSelectCallback;
             this.onCancelCallback = onCancelCallback;
+
+            if (!canSelect)
+            {
+                CancelSelection();
+            }
         }
 
         public void StartTargetedPositionSelection(Action<Vector2> onSelectPositionCallback, Action onCancelCallback)
@@ -172,11 +194,28 @@ namespace Cultura.Core
 
             this.onSelectPositionCallback = onSelectPositionCallback;
             this.onCancelCallback = onCancelCallback;
+
+            if (!canSelect)
+            {
+                CancelSelection();
+            }
         }
 
         public void SetSelectionMode(int mode)
         {
             SelectionMode = (SelectionMode)mode;
+        }
+
+        public void DisableSelection()
+        {
+            ResetCallbacks();
+            canSelect = false;
+        }
+
+        public void EnableSelection()
+        {
+            ResetCallbacks();
+            canSelect = true;
         }
     }
 }

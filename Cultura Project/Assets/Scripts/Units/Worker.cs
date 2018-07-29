@@ -7,7 +7,7 @@ using Sirenix.Serialization;
 
 namespace Cultura.Units
 {
-    public class Worker : Unit, IGatherer, IDepositor
+    public class Worker : Unit, IGatherer, IDepositor, IBuilder
     {
         [OdinSerialize]
         private Inventory inventory;
@@ -59,6 +59,11 @@ namespace Cultura.Units
             }
         }
 
+        public BuildingBlueprint Blueprint
+        {
+            get; set;
+        }
+
         public void GatherResources()
         {
             TargetDeposit.Collect(Inventory, productivity);
@@ -67,6 +72,11 @@ namespace Cultura.Units
         public void DepositResources()
         {
             Inventory.TransferContentsToInventory(TargetRepository);
+        }
+
+        public void Build()
+        {
+            Blueprint.Build(productivity);
         }
     }
 }

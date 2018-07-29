@@ -8,6 +8,8 @@ namespace Cultura.Navigation
 {
     public class Grid : MonoBehaviour
     {
+        public static Grid Instance;
+
         [SerializeField]
         private LayerMask unwalkableLayers;
 
@@ -31,6 +33,7 @@ namespace Cultura.Navigation
 
         private void Awake()
         {
+            Instance = this;
             nodeDiameter = nodeRadius * 2f;
             GenerateGrid();
         }
@@ -66,17 +69,70 @@ namespace Cultura.Navigation
             Vector2 bottomLeft = (Vector2)transform.position - ((Vector2)worldSize * .5f);
 
             Vector3Int gridPos = walkableTilemaps[0].WorldToCell(position);
-            Debug.Log(" Norm Pos  : " + position);
 
-            Debug.Log(" Grid Pos  : " + gridPos);
             Vector2 vector2 = new Vector2(gridPos.x, gridPos.y) - bottomLeft;
-            Debug.Log(" Node Pos  : " + vector2);
 
-            int x = (int)vector2.x;
-            int y = (int)vector2.y;
-            Debug.Log(" X Y  : " + new Vector2(x, y));
+            int x = Mathf.Clamp((int)vector2.x, 0, worldSize.x - 1);
+            int y = Mathf.Clamp((int)vector2.y, 0, worldSize.y - 1);
 
             return grid[x, y];
+        }
+
+        public void SetPositionWalkable(Vector2 position, bool walkable)
+        {
+            NodeFromWorldPoint(position).walkable = walkable;
+        }
+
+        public void SetPositionsWalkable(Vector2 lowerBound, Vector2 upperBound, bool walkable)
+        {
+            Node lowerBoundNode = NodeFromWorldPoint(lowerBound);
+            Node upperBoundNode = NodeFromWorldPoint(upperBound);
+            int xDiff = upperBoundNode.gridX - lowerBoundNode.gridX;
+            int yDiff = upperBoundNode.gridY - lowerBoundNode.gridY;
+
+            for (int x = 0; x <= xDiff; x++)
+            {
+                for (int y = 0; y <= yDiff; y++)
+                {
+                    grid[lowerBoundNode.gridX + x, lowerBoundNode.gridY + y].walkable = walkable;
+                }
+            }
+        }
+
+        public Node GetNearestWalkableNode(Node startNode, int threshold)
+        {
+            if (startNode.walkable) return startNode;
+
+            int counterThreshold = threshold + 1;
+            int startX = startNode.gridX;
+            int startY = startNode.gridY;
+
+            for (int range = 1; range < counterThreshold; range++)
+            {
+                int boundedX = Mathf.Clamp(startX + range, 0, worldSize.x);
+                int boundedY = Mathf.Clamp(startY + range, 0, worldSize.y);
+
+                for (int x = -range, upperBound = range + 1; x < upperBound; x++)
+                {
+                    if (startX + x < 0 || startX + x > worldSize.x - 1) continue;
+
+                    if (startY + range < worldSize.y && grid[startX + x, startY + range].walkable)
+                        return grid[startX + x, startY + range];
+                    else if (startY - range > -1 && grid[startX + x, startY - range].walkable)
+                        return grid[startX + x, startY - range];
+                }
+
+                for (int y = -range + 1; y < range; y++)
+                {
+                    if (startY + y < 0 || startY + y > worldSize.y - 1) continue;
+
+                    if (startX + range < worldSize.x && grid[startX + range, startY + y].walkable)
+                        return grid[startX + range, startY + y];
+                    else if (startX - range > -1 && grid[startX - range, startY + y].walkable)
+                        return grid[startX - range, startY + y];
+                }
+            }
+            return startNode;
         }
 
         public List<Node> GetNeighours(Node centerNode)

@@ -10,6 +10,9 @@ namespace Cultura.Core
     {
         public bool Selected { get; set; }
 
+        [SerializeField]
+        protected bool outlineable = true;
+
         protected SpriteRenderer spriteRenderer;
         protected MaterialPropertyBlock propertyBlock;
 
@@ -39,7 +42,8 @@ namespace Cultura.Core
         private void OnMouseEnter()
         {
             mouseHovering = true;
-            if (Selected) return;
+            if (!outlineable || Selected) return;
+            spriteRenderer.GetPropertyBlock(propertyBlock);
 
             propertyBlock.SetColor(outlineColorId, selectionManager.hoveredOutlineColor);
             spriteRenderer.SetPropertyBlock(propertyBlock);
@@ -48,13 +52,17 @@ namespace Cultura.Core
         private void OnMouseExit()
         {
             mouseHovering = false;
-            if (Selected) return;
+            if (!outlineable || Selected) return;
+            spriteRenderer.GetPropertyBlock(propertyBlock);
+
             propertyBlock.SetColor(outlineColorId, selectionManager.normalOutlineColor);
             spriteRenderer.SetPropertyBlock(propertyBlock);
         }
 
         public void OnSelect()
         {
+            spriteRenderer.GetPropertyBlock(propertyBlock);
+
             propertyBlock.SetColor(outlineColorId, selectionManager.selectedObjectColor);
             spriteRenderer.SetPropertyBlock(propertyBlock);
             Selected = true;
@@ -63,6 +71,8 @@ namespace Cultura.Core
         public void OnDeselect()
         {
             Selected = false;
+            if (spriteRenderer == null) return;
+            spriteRenderer.GetPropertyBlock(propertyBlock);
 
             propertyBlock.SetColor(outlineColorId, mouseHovering ? selectionManager.hoveredOutlineColor : selectionManager.normalOutlineColor);
             spriteRenderer.SetPropertyBlock(propertyBlock);

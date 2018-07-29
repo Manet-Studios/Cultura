@@ -46,6 +46,10 @@ namespace Cultura.Units
             {
                 AssignCommand(1);
             }
+            else if (Input.GetKeyDown(KeyCode.Alpha3))
+            {
+                AssignCommand(2);
+            }
         }
 
         public void FindPath(Vector3 targetPosition, Action<bool> findPathCallback, Action completePathCallback)
