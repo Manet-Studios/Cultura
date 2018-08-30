@@ -1,11 +1,13 @@
 fileFormatVersion: 2
-guid: 04523469948ec474c984a932abc19a49
+guid: 14274f63a09391f4ebcc6feec456af49
 TextureImporter:
   fileIDToRecycleName:
-    21300000: UI Icon VillageStats
+    21300000: UI Icons Building
     21300002: UI Icon Edit
+    21300004: UI Icon Inventory
+    21300006: UI Icon Help
   externalObjects: {}
-  serializedVersion: 6
+  serializedVersion: 7
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -97,7 +99,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI Icon VillageStats
+      name: UI Icons Building
       rect:
         serializedVersion: 2
         x: 0
@@ -111,7 +113,7 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ccc9714718e0c684e91632abc473c206
+      spriteID: 77c51362526f9d2488fffcbc4a49a39f
       vertices: []
       indices: 
       edges: []
@@ -131,7 +133,47 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0b50accbe51ac345bca9e14c6c507df
+      spriteID: 070d2df88c8d67045ba0e3f46760e5d3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI Icon Inventory
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec55b46526a14e047ba134f086db5d8e
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI Icon Help
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fd8017284c5eec4c9309389eb654385
       vertices: []
       indices: 
       edges: []
@@ -139,12 +181,14 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 85a6b9473f1b1bb43bf5802cc0253aaa
+    spriteID: 3022f122003a2a64eb3a8b7817c8cad6
     vertices: []
     indices: 
     edges: []
     weights: []
   spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 
