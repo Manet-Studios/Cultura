@@ -1,11 +1,18 @@
 fileFormatVersion: 2
-guid: 14274f63a09391f4ebcc6feec456af49
+guid: 160fdc2ced2d084489cafd9e7f4957dd
 TextureImporter:
   fileIDToRecycleName:
-    21300000: UI Icons Building
-    21300002: UI Icon Edit
-    21300004: UI Icon Inventory
-    21300006: UI Icon Help
+    21300000: Structure Icon Tent
+    21300002: UI Icons Edit
+    21300004: UI Icon Main Menu
+    21300006: UI Icon Settings
+    21300008: UI Icons Play
+    21300010: UI Icon Pause
+    21300012: UI Icon Inventory
+    21300014: UI Icons Help
+    21300016: UI Icon Quit
+    21300018: UI Icon Glossary
+    21300020: UI Icons Progression
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -99,7 +106,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UI Icons Building
+      name: Structure Icon Tent
       rect:
         serializedVersion: 2
         x: 0
@@ -113,13 +120,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 77c51362526f9d2488fffcbc4a49a39f
+      spriteID: 885e057811b2fb24db852ecf1c11a327
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI Icon Edit
+      name: UI Icons Edit
       rect:
         serializedVersion: 2
         x: 16
@@ -133,7 +140,87 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 070d2df88c8d67045ba0e3f46760e5d3
+      spriteID: 992ae50ea50d9ba43ac5e806e0f8d955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI Icon Main Menu
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d53856869ef8d98409a18cbaa9234efb
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI Icon Settings
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c99ebe5f31fc7194cafb9cf4263737d2
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI Icons Play
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a592e19f40b337a4d9ef38aea8d028f3
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI Icon Pause
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f81fff99683cd43429975a10a82d68db
       vertices: []
       indices: 
       edges: []
@@ -153,13 +240,13 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec55b46526a14e047ba134f086db5d8e
+      spriteID: bdb95e7cedc01924cab6bbecb6cbb5fd
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UI Icon Help
+      name: UI Icons Help
       rect:
         serializedVersion: 2
         x: 16
@@ -173,7 +260,67 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5fd8017284c5eec4c9309389eb654385
+      spriteID: 748a1fcd30672314d9cead85bef0962c
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI Icon Quit
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38fdfd274c48ff549918fed4fe1de537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI Icon Glossary
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f3b42b046d50e142bcc5d161052713a
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: UI Icons Progression
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fae5a536764c9b488244bc3b8a26bee
       vertices: []
       indices: 
       edges: []
@@ -181,7 +328,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 3022f122003a2a64eb3a8b7817c8cad6
+    spriteID: df372be950fa7ac4ba60cf9712e5ef20
     vertices: []
     indices: 
     edges: []
