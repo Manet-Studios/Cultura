@@ -70,8 +70,11 @@ public class AnchorToolsEditor : EditorWindow
 
     static private void TryToGetRectTransform()
     {
+        if (UnityEditor.Selection.activeGameObject == null) return;
         currentRectTransform = UnityEditor.Selection.activeGameObject.GetComponent<RectTransform>();
-        parentRectTransform = currentRectTransform.parent.gameObject.GetComponent<RectTransform>();
+        if (currentRectTransform != null)
+
+            parentRectTransform = currentRectTransform.parent.gameObject.GetComponent<RectTransform>();
     }
 
     static private void CalculateCurrentXY()
