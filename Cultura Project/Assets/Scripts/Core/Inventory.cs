@@ -12,9 +12,22 @@ namespace Cultura.Core
         public Dictionary<int, StorageUnit> itemsInInventory = new Dictionary<int, StorageUnit>();
 
         [SerializeField]
+        private int _currentStorage;
+
+        [SerializeField]
         private int _storageLimit;
 
-        public int CurrentStorage { get; set; }
+        public int CurrentStorage
+        {
+            get
+            {
+                return _currentStorage;
+            }
+            set
+            {
+                _currentStorage = value;
+            }
+        }
 
         public int StorageLimit
         {
@@ -64,7 +77,7 @@ namespace Cultura.Core
 
         public void StoreItem(int itemID, int quantity, out int excessAmount)
         {
-            excessAmount = Mathf.Max(0, StorageLimit - (CurrentStorage + quantity));
+            excessAmount = Mathf.Max(0, (CurrentStorage + quantity) - StorageLimit);
             if (!itemsInInventory.ContainsKey(itemID))
             {
                 StorageUnit newUnit = new StorageUnit();

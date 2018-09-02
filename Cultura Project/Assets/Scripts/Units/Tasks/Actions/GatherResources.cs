@@ -14,14 +14,10 @@ namespace Cultura.Units.Tasks
 
         public ResourceDeposit ResourceDeposit { get; set; }
 
-        public override void OnAwake()
-        {
-            base.OnAwake();
-            gatherer = baseModule.GetModule<GathererModule>(ModuleID.Gatherer);
-        }
-
         public override void OnStart()
         {
+            gatherer = baseModule.GetModule<GathererModule>(ModuleID.Gatherer);
+
             if (gatherer != null)
             {
                 ResourceDeposit = gatherer.TargetDeposit;

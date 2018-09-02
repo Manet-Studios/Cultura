@@ -9,6 +9,8 @@ namespace Cultura.Units
         string CommandID { get; }
         BehaviorDesigner.Runtime.BehaviorTree BehaviorTree { set; }
 
+        void StartCommand();
+
         void OnCancelCommand();
     }
 
@@ -23,8 +25,6 @@ namespace Cultura.Units
     public interface IComponentCommand<T> : ICommand
     {
         SelectionMode Target { get; }
-
-        void StartCommand();
 
         void OnRecieveInformation(T obj);
 

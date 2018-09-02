@@ -20,7 +20,8 @@ namespace Cultura.Units.Tasks
 
         public override void OnStart()
         {
-            base.OnStart();
+            abortTrigger.Value = false;
+
             pathStatus = 0;
             completedPath = false;
             unit.FindPath(targetPosition.Value, OnFindPath, OnCompletePath);

@@ -3,9 +3,8 @@
 Shader "Custom/Sprite Outline" {
 	Properties{
 		_MainTex("Base (RGB)", 2D) = "white" {}
-		_Color("Color", Color) = (1, 1, 1, 1)
+		_OutlineBaseColor("Outline Base Color", Color) = (1, 1, 1, 1)
 		_OutlineColor("Outline Color", Color) = (1, 1, 1, 1)
-		_OutlineWidth("Outline Width",Float) = 1
 	}
 		SubShader{
 		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }
@@ -41,27 +40,18 @@ Shader "Custom/Sprite Outline" {
 		return o;
 	}
 
-	fixed4 _Color;
 	fixed4 _OutlineColor;
-	float4 _MainTex_TexelSize;
-	float _OutlineWidth;
+	fixed4 _OutlineBaseColor;
 
 	fixed4 frag(v2f i) : COLOR
 	{
-		half4 c = tex2D(_MainTex, i.uv);
-		//c.rbg *= c.a;
+		fixed4 col = tex2D(_MainTex,i.uv);
+		col.rgb *= col.a;
+		if (col.r == _OutlineBaseColor.r) {
+			return _OutlineColor;
+		}
 
-		half4 outlineC = _OutlineColor;
-		c *= i.color * c.a;
-		//outlineC.a *= ceil(c.a);
-		outlineC.rgb *= outlineC.a;
-
-		fixed alpha_up = tex2D(_MainTex, i.uv + fixed2(0, _OutlineWidth)).a;
-		fixed alpha_down = tex2D(_MainTex, i.uv - fixed2(0, _OutlineWidth)).a;
-		fixed alpha_right = tex2D(_MainTex, i.uv + fixed2(_OutlineWidth, 0)).a;
-		fixed alpha_left = tex2D(_MainTex, i.uv - fixed2(_OutlineWidth, 0)).a;
-
-		return lerp(c * i.color , outlineC, c.a == 0 && alpha_up + alpha_down + alpha_right + alpha_left > 0);
+	return col;
 	}
 
 		ENDCG

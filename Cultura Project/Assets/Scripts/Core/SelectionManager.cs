@@ -3,6 +3,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Cultura.Core
 {
@@ -60,11 +62,21 @@ namespace Cultura.Core
 
         public event Action<SelectionMode> SelectionModeChangeEventHandler;
 
-        private List<ISelectable> currentlySelectedObjects = new List<ISelectable>();
+        [HideInInspector]
+        public List<ISelectable> currentlySelectedObjects = new List<ISelectable>();
+
+        public event Action SelectObjectEventHandler;
+
+        public event Action DeselectObjectEventHandler;
+
+        private EventSystem eventSystem;
+        private GraphicRaycaster raycaster;
 
         private void Start()
         {
             canSelect = true;
+            eventSystem = FindObjectOfType<EventSystem>();
+            raycaster = FindObjectOfType<GraphicRaycaster>();
         }
 
         private void Update()
@@ -72,6 +84,15 @@ namespace Cultura.Core
             if (!canSelect) return;
 
             Vector2 cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+            PointerEventData pointerEventData = new PointerEventData(eventSystem);
+            pointerEventData.position = Input.mousePosition;
+
+            List<RaycastResult> raycastResults = new List<RaycastResult>();
+
+            raycaster.Raycast(pointerEventData, raycastResults);
+
+            if (raycastResults.Count > 0) return;
 
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
@@ -146,11 +167,7 @@ namespace Cultura.Core
                 {
                     if (selectionInfos[0].selectionCriteria(overlappedColliders[0].transform))
                     {
-                        for (int i = 0; i < selectionInfos.Count; i++)
-                        {
-                            selectionInfos[i].onSelectCallback(selectionInfos[i].selectionTransformer(overlappedColliders[0].transform));
-                        }
-                        ResetCallbacks();
+                        CompleteTargetedSelection(overlappedColliders[0].transform);
                     }
                 }
             }
@@ -171,6 +188,7 @@ namespace Cultura.Core
                                 currentlySelectedObjects.Add(selectables[i]);
                             }
                         }
+                        if (SelectObjectEventHandler != null) SelectObjectEventHandler();
                     }
                     else if (Input.GetKey(KeyCode.LeftControl))
                     {
@@ -182,6 +200,7 @@ namespace Cultura.Core
                                 currentlySelectedObjects.Remove(selectables[i]);
                             }
                         }
+                        if (DeselectObjectEventHandler != null) DeselectObjectEventHandler();
                     }
                     else
                     {
@@ -190,11 +209,15 @@ namespace Cultura.Core
                             currentlySelectedObjects[i].OnDeselect();
                         }
                         currentlySelectedObjects.Clear();
+                        if (DeselectObjectEventHandler != null) DeselectObjectEventHandler();
+
                         for (int i = 0; i < selectables.Length; i++)
                         {
                             selectables[i].OnSelect();
                             currentlySelectedObjects.Add(selectables[i]);
                         }
+
+                        if (SelectObjectEventHandler != null) SelectObjectEventHandler();
                     }
                 }
                 else
@@ -204,8 +227,20 @@ namespace Cultura.Core
                         currentlySelectedObjects[i].OnDeselect();
                     }
                     currentlySelectedObjects.Clear();
+                    if (DeselectObjectEventHandler != null) DeselectObjectEventHandler();
                 }
             }
+        }
+
+        private void CompleteTargetedSelection(Transform selectedTransform)
+        {
+            for (int i = 0; i < selectionInfos.Count; i++)
+            {
+                selectionInfos[i].onSelectCallback(selectionInfos[i].selectionTransformer(selectedTransform));
+            }
+
+            selectionInfos.Clear();
+            ResetCallbacks();
         }
 
         private void OnDrag(Vector2 cursorPosition)
@@ -218,7 +253,7 @@ namespace Cultura.Core
 
         private void ResetCallbacks()
         {
-            targetingLocation = false;
+            targetingSelection = false;
             targetingLocation = false;
 
             foreach (SelectionInfo<object> selectionInfo in selectionInfos)
@@ -232,6 +267,8 @@ namespace Cultura.Core
                 locationSelection.onCancelCallback();
             }
             locationSelections.Clear();
+
+            SelectionMode = SelectionMode.NonTerrain;
         }
 
         public void DisableSelection()

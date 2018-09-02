@@ -9,12 +9,12 @@ namespace Cultura.Units.Modules
 {
     [RequireComponent(typeof(Unit))]
     [RequireComponent(typeof(BehaviorDesigner.Runtime.BehaviorTree))]
-    public class VillagerBase : SerializedMonoBehaviour
+    public class VillagerBase : SerializedMonoBehaviour, ISelectable
     {
         [OdinSerialize]
         private ICommand[] assignableCommands;
 
-        [SerializeField]
+        [OdinSerialize]
         private Inventory inventory;
 
         private Dictionary<int, IVillagerModule> modules = new Dictionary<int, IVillagerModule>();
@@ -28,6 +28,8 @@ namespace Cultura.Units.Modules
                 return inventory;
             }
         }
+
+        public bool Selected { get; set; }
 
         private void Start()
         {
@@ -60,21 +62,22 @@ namespace Cultura.Units.Modules
 
         public void AssignCommand(int commandIndex)
         {
+            if (!Selected) return;
+
             ICommand command = assignableCommands[commandIndex];
 
-            if (command.Type == CommandType.Position)
-            {
-                IPositionCommand positionCommand = (IPositionCommand)command;
-                Debug.Log("Assigned : " + positionCommand.CommandID);
+            command.StartCommand();
+            Debug.Log("Assigned : " + command.CommandID);
+        }
 
-                SelectionManager.Instance.StartLocationSelection(new SelectionManager.LocationSelection(positionCommand.OnRecieveInformation, positionCommand.OnCancelCommand));
-            }
-            else if (command.Type == CommandType.Component)
-            {
-                IComponentCommand<object> componentCommand = (IComponentCommand<object>)command;
-                Debug.Log("Assigned : " + componentCommand.CommandID);
-                componentCommand.StartCommand();
-            }
+        public void OnSelect()
+        {
+            Selected = true;
+        }
+
+        public void OnDeselect()
+        {
+            Selected = false;
         }
     }
 }

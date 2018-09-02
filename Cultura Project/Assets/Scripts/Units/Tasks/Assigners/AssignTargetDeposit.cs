@@ -13,16 +13,18 @@ namespace Cultura.Units.Tasks
         public SharedTransform target;
         public SharedVector2 targetPosition;
 
-        public override void OnAwake()
+        public override void OnStart()
         {
-            base.OnAwake();
             gatherer = baseModule.GetModule<GathererModule>(ModuleID.Gatherer);
+            Debug.Log(gatherer);
         }
 
         public override TaskStatus OnUpdate()
         {
             if (target.Value != null)
             {
+                Debug.Log(gatherer);
+
                 gatherer.TargetDeposit = target.Value.GetComponent<Construction.ResourceDeposit>();
 
                 if (gatherer.TargetDeposit == null) return TaskStatus.Failure;

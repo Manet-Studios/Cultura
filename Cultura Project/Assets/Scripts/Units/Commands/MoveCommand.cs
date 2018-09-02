@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
+using Cultura.Core;
 using UnityEngine;
 
 namespace Cultura.Units.Commands
@@ -36,6 +37,11 @@ namespace Cultura.Units.Commands
         public void OnCancelCommand()
         {
             Debug.Log("Move Command Cancelled");
+        }
+
+        public void StartCommand()
+        {
+            SelectionManager.Instance.StartLocationSelection(new SelectionManager.LocationSelection(OnRecieveInformation, OnCancelCommand));
         }
 
         public void OnRecieveInformation(Vector2 pos)
