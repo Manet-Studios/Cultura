@@ -3,24 +3,26 @@ using BehaviorDesigner.Runtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cultura.Construction;
 
 namespace Cultura.Units.Tasks
 {
-    public class DepositResources : Action
+    public class DepositResources : VillagerAction
     {
-        /*
-        private IDepositor unit;
+        public SharedTransform targetTransform;
 
-        public override void OnAwake()
+        private InventoryRepository targetRepository;
+
+        public override void OnStart()
         {
-            unit = transform.GetComponent<IDepositor>();
+            base.OnStart();
+            targetRepository = targetTransform.Value.GetComponent<InventoryRepository>();
         }
 
         public override TaskStatus OnUpdate()
         {
-            unit.DepositResources();
+            baseModule.Inventory.TransferContents(targetRepository.Inventory);
             return TaskStatus.Success;
         }
-        */
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace Cultura.Construction
 {
-    public class ResourceRepository : SerializedMonoBehaviour, IRepository
+    public class InventoryRepository : SerializedMonoBehaviour, IRepository
     {
         public bool depositInPlayerInventory;
 

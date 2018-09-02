@@ -42,6 +42,26 @@ namespace Cultura.Core
 
         public event Action<StorageUnit> ItemRemovedEventHandler;
 
+        public void TransferContents(Inventory inventory)
+        {
+            List<int> keys = new List<int>();
+            foreach (int key in itemsInInventory.Keys)
+            {
+                keys.Add(key);
+            }
+
+            foreach (int key in keys)
+            {
+                int excessQuantity = 0;
+                inventory.StoreItem(key, RemoveItem(key, itemsInInventory[key].Quantity), out excessQuantity);
+                if (excessQuantity > 0)
+                {
+                    int overflow = 0;
+                    StoreItem(key, excessQuantity, out overflow);
+                }
+            }
+        }
+
         public void StoreItem(int itemID, int quantity, out int excessAmount)
         {
             excessAmount = Mathf.Max(0, StorageLimit - (CurrentStorage + quantity));

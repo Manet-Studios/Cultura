@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Cultura.Units.Tasks
 {
-    public class UnitMovement : Action
+    public class UnitMovement : VillagerAction
     {
         public SharedVector2 targetPosition;
         private Unit unit;
@@ -14,11 +14,13 @@ namespace Cultura.Units.Tasks
 
         public override void OnAwake()
         {
+            base.OnAwake();
             unit = transform.GetComponent<Unit>();
         }
 
         public override void OnStart()
         {
+            base.OnStart();
             pathStatus = 0;
             completedPath = false;
             unit.FindPath(targetPosition.Value, OnFindPath, OnCompletePath);
@@ -36,10 +38,17 @@ namespace Cultura.Units.Tasks
 
         public override TaskStatus OnUpdate()
         {
+            if (abortTrigger.Value)
+            {
+                abortTrigger.Value = false;
+                unit.CancelPath();
+                return TaskStatus.Failure;
+            }
+
             if (pathStatus == 1)
-                return completedPath ? TaskStatus.Success : TaskStatus.Running;
+                return completedPath ? TaskStatus.Success : TaskStatus.Running;//following path
             else
-                return pathStatus == 0 ? TaskStatus.Running : TaskStatus.Failure;
+                return pathStatus == 0 ? TaskStatus.Running : TaskStatus.Failure;//finding path
         }
     }
 }

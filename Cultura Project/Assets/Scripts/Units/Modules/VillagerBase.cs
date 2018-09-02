@@ -7,6 +7,8 @@ using Cultura.Core;
 
 namespace Cultura.Units.Modules
 {
+    [RequireComponent(typeof(Unit))]
+    [RequireComponent(typeof(BehaviorDesigner.Runtime.BehaviorTree))]
     public class VillagerBase : SerializedMonoBehaviour
     {
         [OdinSerialize]

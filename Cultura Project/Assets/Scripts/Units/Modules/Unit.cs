@@ -35,6 +35,11 @@ namespace Cultura.Units
             else findPathCallback(false);
         }
 
+        public void CancelPath()
+        {
+            if (followPathCoroutine != null) StopCoroutine(followPathCoroutine);
+        }
+
         private IEnumerator FollowPath(Action completePathCallback)
         {
             targetIndex = 0;

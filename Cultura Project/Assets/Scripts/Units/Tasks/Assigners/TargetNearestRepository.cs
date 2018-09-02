@@ -5,23 +5,17 @@ using System.Linq;
 
 namespace Cultura.Units.Tasks
 {
-    public class TargetNearestRepository : Action
+    public class TargetNearestRepository : VillagerAction
     {
-        /*
-        public SharedInt resource;
+        public SharedTransform targetTransform;
         public SharedVector2 targetPosition;
-        private Construction.ResourceRepository[] resourceRepositories;
-        private IDepositor unit;
-
-        public override void OnAwake()
-        {
-            unit = transform.GetComponent<IDepositor>();
-        }
+        private Construction.InventoryRepository[] resourceRepositories;
 
         public override void OnStart()
         {
-            resourceRepositories = Object.FindObjectsOfType<Construction.ResourceRepository>()
-                .Where(r => !r.Inventory.AtResourceCapacity((Core.Resource)resource.Value))
+            base.OnStart();
+            resourceRepositories = Object.FindObjectsOfType<Construction.InventoryRepository>()
+                .Where(r => !r.Inventory.AtMaxCapacity)
                 .OrderBy(r => Vector2.Distance(r.transform.position, transform.position)).ToArray();
         }
 
@@ -29,8 +23,8 @@ namespace Cultura.Units.Tasks
         {
             if (resourceRepositories.Length > 0)
             {
-                unit.TargetRepository = resourceRepositories[0];
-                targetPosition.Value = resourceRepositories[0].transform.position;
+                targetTransform.Value = resourceRepositories[0].transform;
+                targetPosition.Value = targetTransform.Value.position;
                 return TaskStatus.Success;
             }
             else
@@ -38,6 +32,5 @@ namespace Cultura.Units.Tasks
                 return TaskStatus.Failure;
             }
         }
-        */
     }
 }
