@@ -8,6 +8,7 @@ namespace Cultura.Units.Tasks
 {
     public class DepositResources : Action
     {
+        /*
         private IDepositor unit;
 
         public override void OnAwake()
@@ -20,5 +21,6 @@ namespace Cultura.Units.Tasks
             unit.DepositResources();
             return TaskStatus.Success;
         }
+        */
     }
 }

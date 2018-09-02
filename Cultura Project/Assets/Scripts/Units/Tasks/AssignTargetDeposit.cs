@@ -8,6 +8,7 @@ namespace Cultura.Units.Tasks
 {
     public class AssignTargetDeposit : Action
     {
+        /*
         private IGatherer gatherer;
         public SharedTransform target;
         public SharedVector2 targetPosition;
@@ -28,5 +29,6 @@ namespace Cultura.Units.Tasks
 
             return TaskStatus.Failure;
         }
+        */
     }
 }

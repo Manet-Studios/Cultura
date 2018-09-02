@@ -7,6 +7,7 @@ namespace Cultura.Units.Tasks
 {
     public class TargetNearestRepository : Action
     {
+        /*
         public SharedInt resource;
         public SharedVector2 targetPosition;
         private Construction.ResourceRepository[] resourceRepositories;
@@ -37,5 +38,6 @@ namespace Cultura.Units.Tasks
                 return TaskStatus.Failure;
             }
         }
+        */
     }
 }

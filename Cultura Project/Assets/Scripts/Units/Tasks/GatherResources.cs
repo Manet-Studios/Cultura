@@ -9,6 +9,7 @@ namespace Cultura.Units.Tasks
 {
     public class GatherResources : Action
     {
+        /*
         private IGatherer gatherer;
         public SharedInt resource;
 
@@ -31,5 +32,6 @@ namespace Cultura.Units.Tasks
                 gatherer.GatherResources();
             return ResourceDeposit == null || gatherer.Inventory.AtResourceCapacity((Core.Resource)resource.Value) ? TaskStatus.Success : TaskStatus.Running;
         }
+        */
     }
 }

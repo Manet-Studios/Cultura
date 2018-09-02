@@ -9,6 +9,7 @@ namespace Cultura.Units.Tasks
 {
     public class BuildBlueprint : Action
     {
+        /*
         private IBuilder builder;
 
         public BuildingBlueprint Blueprint { get; set; }
@@ -29,5 +30,6 @@ namespace Cultura.Units.Tasks
                 builder.Build();
             return Blueprint == null ? TaskStatus.Success : TaskStatus.Running;
         }
+        */
     }
 }

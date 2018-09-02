@@ -11,6 +11,11 @@ namespace Cultura.Core
     {
         public static VillageManager Instance;
 
+        public static Registry RegistryInstance;
+
+        [SerializeField]
+        private Registry registry;
+
         [NonSerialized]
         [OdinSerialize]
         public Inventory inventory;
@@ -67,35 +72,12 @@ namespace Cultura.Core
             }
         }
 
-        /// <summary>
-        /// Fires an event when there is a need for more units or when that need is satisfied
-        /// <para b> test</para>
-        /// </summary>
         public event Action<bool> UnitCountEventHandler;
-
-        // Use this for initialization
-        private void Start()
-        {
-        }
-
-        // Update is called once per frame
-        private void Update()
-        {
-        }
 
         private void Awake()
         {
             Instance = this;
-        }
-
-        public void AddResourceCapacity(Resource resource, int capacity)
-        {
-            inventory.AddCapacity(resource, capacity);
-        }
-
-        public void RemoveResourceCapacity(Resource resource, int capacity)
-        {
-            inventory.RemoveCapacity(resource, capacity);
+            RegistryInstance = registry;
         }
     }
 }

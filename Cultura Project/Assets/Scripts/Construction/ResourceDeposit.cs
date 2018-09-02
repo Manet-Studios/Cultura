@@ -1,5 +1,4 @@
 ﻿using Cultura.Core;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,43 +9,27 @@ namespace Cultura.Construction
     public class ResourceDeposit : Selectable
     {
         [SerializeField]
-        private Resource resource;
+        private int storedItem;
 
         [SerializeField]
-        private int resourceAmount;
+        private int quantity;
 
-        public int ResourceAmount
+        [SerializeField]
+        private Vector2Int quantityRange;
+
+        protected override void Start()
         {
-            get
-            {
-                return resourceAmount;
-            }
-
-            set
-            {
-                resourceAmount = value;
-            }
-        }
-
-        public Resource Resource
-        {
-            get
-            {
-                return resource;
-            }
-
-            set
-            {
-                resource = value;
-            }
+            base.Start();
+            quantity = Random.Range(quantityRange.x, quantityRange.y);
         }
 
         public void Collect(Inventory inv, int amount)
         {
-            inv.DepositResource(resource, amount);
-            ResourceAmount -= amount;
+            int excess = 0;
+            inv.StoreItem(storedItem, amount, out excess);
+            quantity -= (amount - excess);
 
-            if (ResourceAmount < 1)
+            if (quantity < 1)
             {
                 TriggerDestruction();
             }
@@ -54,6 +37,7 @@ namespace Cultura.Construction
 
         private void TriggerDestruction()
         {
+            //Stuff
             Destroy(gameObject);
         }
     }

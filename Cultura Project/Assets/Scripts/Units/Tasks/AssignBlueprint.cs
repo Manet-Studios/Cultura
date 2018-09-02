@@ -8,25 +8,26 @@ namespace Cultura.Units.Tasks
 {
     public class AssignBlueprint : Action
     {
-        private IBuilder builder;
-        public SharedTransform target;
-        public SharedVector2 targetPosition;
+        /* private IBuilder builder;
 
-        public override void OnAwake()
-        {
-            builder = transform.GetComponent<IBuilder>();
-        }
+         public SharedTransform target;
+         public SharedVector2 targetPosition;
 
-        public override TaskStatus OnUpdate()
-        {
-            if (target.Value != null)
-            {
-                builder.Blueprint = target.Value.GetComponent<Construction.BuildingBlueprint>();
-                targetPosition.Value = target.Value.position;
-                return TaskStatus.Success;
-            }
+         public override void OnAwake()
+         {
+             builder = transform.GetComponent<IBuilder>();
+         }
 
-            return TaskStatus.Failure;
-        }
+         public override TaskStatus OnUpdate()
+         {
+             if (target.Value != null)
+             {
+                 builder.Blueprint = target.Value.GetComponent<Construction.BuildingBlueprint>();
+                 targetPosition.Value = target.Value.position;
+                 return TaskStatus.Success;
+             }
+
+             return TaskStatus.Failure;
+         }*/
     }
 }

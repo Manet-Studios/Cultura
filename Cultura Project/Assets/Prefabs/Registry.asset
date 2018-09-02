@@ -15,17 +15,18 @@ MonoBehaviour:
     SerializedFormat: 2
     SerializedBytes: 
     ReferencedUnityObjects:
-    - {fileID: 1066349232285568, guid: cc4b08ecb9e7cea4199d4d738f88fc1c, type: 2}
-    - {fileID: 1229568280373710, guid: 4c7543ff6bb6ef4418e49a5eade73a9b, type: 2}
+    - {fileID: 21300004, guid: e55034145c7636347be3d3bd64025ab2, type: 3}
+    - {fileID: 21300000, guid: e55034145c7636347be3d3bd64025ab2, type: 3}
+    - {fileID: 21300010, guid: e55034145c7636347be3d3bd64025ab2, type: 3}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
     PrefabModifications: []
     SerializationNodes:
-    - Name: buildingPrefabs
+    - Name: ItemRegistry
       Entry: 7
-      Data: 0|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib
+      Data: 0|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[Cultura.Core.Item,
+        Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 7
       Data: 1|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
@@ -35,7 +36,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 3
     - Name: 
       Entry: 7
       Data: 
@@ -43,8 +44,80 @@ MonoBehaviour:
       Entry: 3
       Data: 0
     - Name: 
+      Entry: 7
+      Data: 2|Cultura.Core.Item, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Metal
+    - Name: description
+      Entry: 1
+      Data: Resource
+    - Name: id
+      Entry: 3
+      Data: 0
+    - Name: icon
       Entry: 10
       Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 3|Cultura.Core.Item, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Wood
+    - Name: description
+      Entry: 1
+      Data: Resource
+    - Name: id
+      Entry: 3
+      Data: 1
+    - Name: icon
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 3
+      Data: 2
+    - Name: 
+      Entry: 7
+      Data: 4|Cultura.Core.Food, Assembly-CSharp
+    - Name: name
+      Entry: 1
+      Data: Corn
+    - Name: description
+      Entry: 1
+      Data: Test Food
+    - Name: id
+      Entry: 3
+      Data: 2
+    - Name: icon
+      Entry: 10
+      Data: 2
+    - Name: satiationLevel
+      Entry: 3
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 8
       Data: 
@@ -54,32 +127,16 @@ MonoBehaviour:
     - Name: 
       Entry: 8
       Data: 
-    - Name: units
+    - Name: BuildingRegistry
       Entry: 7
-      Data: 2|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[UnityEngine.GameObject,
-        UnityEngine.CoreModule]], mscorlib
+      Data: 5|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[Cultura.Construction.IBuilding,
+        Assembly-CSharp]], mscorlib
     - Name: comparer
-      Entry: 7
-      Data: 3|System.Collections.Generic.GenericEqualityComparer`1[[System.Int32,
-        mscorlib]], mscorlib
-    - Name: 
-      Entry: 8
-      Data: 
+      Entry: 9
+      Data: 1
     - Name: 
       Entry: 12
-      Data: 1
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: 
-      Entry: 3
       Data: 0
-    - Name: 
-      Entry: 10
-      Data: 1
-    - Name: 
-      Entry: 8
-      Data: 
     - Name: 
       Entry: 13
       Data: 

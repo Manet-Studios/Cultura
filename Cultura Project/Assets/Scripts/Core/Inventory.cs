@@ -6,141 +6,93 @@ using Sirenix.Serialization;
 
 namespace Cultura.Core
 {
-    public enum Resource
-    {
-        Wood, Stone, Metal, Food
-    }
-
     [System.Serializable]
     public class Inventory
     {
-        [OdinSerialize]
-        private Dictionary<Resource, StorageUnit> resourceDictionary;
+        public Dictionary<int, StorageUnit> itemsInInventory = new Dictionary<int, StorageUnit>();
 
-        public event Action<Resource, int> UpdateSupplyLevelEventHandler;
+        [SerializeField]
+        private int _storageLimit;
 
-        public bool AtResourceCapacity(Resource resource)
+        public int CurrentStorage { get; set; }
+
+        public int StorageLimit
         {
-            return resourceDictionary[resource].AtCapacity;
-        }
-
-        /// <summary>
-        /// Stores resources in inventory
-        /// </summary>
-        /// <param name="resourceType"></param>
-        /// <param name="resourceAmount"></param>
-        /// <returns>Amount of excess resources that can't be deposited into this inventory</returns>
-        public int DepositResource(Resource resourceType, int resourceAmount)
-        {
-            if (resourceAmount < 0)
+            get
             {
-                Debug.Log(resourceAmount);
-                return resourceAmount;
+                return _storageLimit;
             }
-            int spaceRemaining = resourceDictionary[resourceType].Limit - resourceDictionary[resourceType].Quantity;
-            int excess = resourceAmount - spaceRemaining;
-
-            resourceDictionary[resourceType].Quantity += Math.Min(spaceRemaining, resourceAmount);
-
-            if (UpdateSupplyLevelEventHandler != null)
-                UpdateSupplyLevelEventHandler(resourceType, resourceDictionary[resourceType].Quantity);
-
-            return Mathf.Max(0, excess);
+            set
+            {
+                _storageLimit = value;
+            }
         }
 
-        /// <summary>
-        /// Stores resources in inventory
-        /// </summary>
-        /// <param name="resourceType"></param>
-        /// <param name="resourceAmount"></param>
-        /// <returns>Amount of resources that can be withdrawn from this inventory</returns>
-        public int WithdrawResource(Resource resourceType, int resourceAmount)
+        public event Action<int> UpdateSupplyLevelEventHandler;
+
+        public event Action<StorageUnit> NewItemAddedEventHandler;
+
+        public event Action<StorageUnit> ItemRemovedEventHandler;
+
+        public void StoreItem(int itemID, int quantity, out int excessAmount)
         {
-            int withDrawAmount = Mathf.Min(resourceDictionary[resourceType].Quantity, resourceAmount);
+            excessAmount = Mathf.Max(0, StorageLimit - (CurrentStorage + quantity));
+            if (!itemsInInventory.ContainsKey(itemID))
+            {
+                StorageUnit newUnit = new StorageUnit();
+                newUnit.StoredItemID = itemID;
+                if (NewItemAddedEventHandler != null) NewItemAddedEventHandler(newUnit);
 
-            resourceDictionary[resourceType].Quantity -= withDrawAmount;
+                itemsInInventory.Add(itemID, newUnit);
+            }
 
-            if (UpdateSupplyLevelEventHandler != null)
-                UpdateSupplyLevelEventHandler(resourceType, resourceDictionary[resourceType].Quantity);
-
-            return withDrawAmount;
+            int storeableAmount = (quantity - excessAmount);
+            itemsInInventory[itemID].Quantity += storeableAmount;
+            CurrentStorage += storeableAmount;
         }
 
-        public void TransferContentsToInventory(Inventory targetInventory)
+        public int RemoveItem(int itemID, int quantity)
         {
-            int excessWood = targetInventory.DepositResource(Resource.Wood,
-                WithdrawResource(Resource.Wood, resourceDictionary[Resource.Wood].Limit));
+            if (quantity < 0)
+            {
+                throw new Exception("Tried to withdraw negative amount");
+            }
 
-            DepositResource(Resource.Wood, excessWood);
+            if (!itemsInInventory.ContainsKey(itemID)) return 0;
 
-            int excessStone = targetInventory.DepositResource(Resource.Stone,
-                WithdrawResource(Resource.Stone, resourceDictionary[Resource.Stone].Limit));
+            int removableAmount = Mathf.Min(quantity, itemsInInventory[itemID].Quantity);
+            itemsInInventory[itemID].Quantity -= removableAmount;
 
-            DepositResource(Resource.Stone, excessStone);
+            if (itemsInInventory[itemID].Quantity == 0)
+            {
+                if (ItemRemovedEventHandler != null) ItemRemovedEventHandler(itemsInInventory[itemID]);
+                itemsInInventory.Remove(itemID);
+            }
 
-            int excessMetal = targetInventory.DepositResource(Resource.Metal,
-                WithdrawResource(Resource.Metal, resourceDictionary[Resource.Metal].Limit));
-
-            DepositResource(Resource.Metal, excessMetal);
-        }
-
-        public void TransferContentsToInventory(Construction.IRepository targetRepository)
-        {
-            TransferContentsToInventory(targetRepository.Inventory);
-        }
-
-        public void AddCapacity(Resource resource, int capacity)
-        {
-            resourceDictionary[resource].Limit += capacity;
-        }
-
-        public void RemoveCapacity(Resource resource, int capacity)
-        {
-            resourceDictionary[resource].Limit -= capacity;
+            return removableAmount;
         }
 
         [System.Serializable]
         public class StorageUnit
         {
-            [SerializeField]
-            private int quantity;
+            private int _quantity;
 
-            [SerializeField]
-            private int limit;
-
-            public bool AtCapacity
-            {
-                get
-                {
-                    return Quantity == Limit;
-                }
-            }
-
-            public int Limit
-            {
-                get
-                {
-                    return limit;
-                }
-
-                set
-                {
-                    limit = Mathf.Clamp(value, 1, int.MaxValue);
-                }
-            }
+            public int StoredItemID { get; set; }
 
             public int Quantity
             {
                 get
                 {
-                    return quantity;
+                    return _quantity;
                 }
-
                 set
                 {
-                    quantity = Mathf.Clamp(value, 0, Limit);
+                    _quantity = value;
+                    if (OnQuantityUpdate != null) OnQuantityUpdate(_quantity);
                 }
             }
+
+            public event Action<int> OnQuantityUpdate;
         }
     }
 }

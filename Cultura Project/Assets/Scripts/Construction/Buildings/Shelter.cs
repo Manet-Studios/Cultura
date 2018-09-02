@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Cultura.Construction
 {
-    public class Shelter : Selectable, IStorageBuilding
+    public class Shelter : MonoBehaviour, IBuildingModule
     {
         [TabGroup("Unit Production")]
         [SerializeField]
@@ -23,26 +23,6 @@ namespace Cultura.Construction
         [TabGroup("Unit Production")]
         [SerializeField]
         private Transform spawnPoint;
-
-        [TabGroup("Storage")]
-        [SerializeField]
-        private int additionalWoodStorage;
-
-        [TabGroup("Storage")]
-        [SerializeField]
-        private int additionalStoneStorage;
-
-        [TabGroup("Storage")]
-        [SerializeField]
-        private int additionalMetalStorage;
-
-        [TabGroup("Storage")]
-        [SerializeField]
-        private int additionalFoodStorage;
-
-        [TabGroup("Construction")]
-        [SerializeField]
-        private BuildingBlueprint blueprintPrefab;
 
         private Cultura.Core.VillageManager villageManager;
 
@@ -97,71 +77,6 @@ namespace Cultura.Construction
             }
         }
 
-        public int AdditionalWoodStorage
-        {
-            get
-            {
-                return additionalWoodStorage;
-            }
-
-            set
-            {
-                additionalWoodStorage = value;
-            }
-        }
-
-        public int AdditionalStoneStorage
-        {
-            get
-            {
-                return additionalStoneStorage;
-            }
-
-            set
-            {
-                additionalStoneStorage = value;
-            }
-        }
-
-        public int AdditionalMetalStorage
-        {
-            get
-            {
-                return additionalMetalStorage;
-            }
-
-            set
-            {
-                additionalMetalStorage = value;
-            }
-        }
-
-        public int AdditionalFoodStorage
-        {
-            get
-            {
-                return additionalFoodStorage;
-            }
-
-            set
-            {
-                additionalFoodStorage = value;
-            }
-        }
-
-        public BuildingBlueprint BlueprintPrefab
-        {
-            get
-            {
-                return blueprintPrefab;
-            }
-
-            set
-            {
-                blueprintPrefab = value;
-            }
-        }
-
         #endregion Properties
 
         public virtual void OnBuild()
@@ -169,11 +84,6 @@ namespace Cultura.Construction
             villageManager = VillageManager.Instance;
             villageManager.UnitCountEventHandler += OnUnitCountUpdate;
             villageManager.UnitCapacity += UnitCapacity;
-
-            villageManager.AddResourceCapacity(Core.Resource.Food, AdditionalFoodStorage);
-            villageManager.AddResourceCapacity(Core.Resource.Stone, AdditionalStoneStorage);
-            villageManager.AddResourceCapacity(Core.Resource.Metal, AdditionalMetalStorage);
-            villageManager.AddResourceCapacity(Core.Resource.Wood, AdditionalWoodStorage);
         }
 
         protected virtual void OnUnitCountUpdate(bool insufficientUnitCount)
@@ -192,11 +102,6 @@ namespace Cultura.Construction
         {
             villageManager.UnitCountEventHandler -= OnUnitCountUpdate;
             villageManager.UnitCapacity -= UnitCapacity;
-
-            villageManager.RemoveResourceCapacity(Core.Resource.Food, AdditionalFoodStorage);
-            villageManager.RemoveResourceCapacity(Core.Resource.Stone, AdditionalStoneStorage);
-            villageManager.RemoveResourceCapacity(Core.Resource.Metal, AdditionalMetalStorage);
-            villageManager.RemoveResourceCapacity(Core.Resource.Wood, AdditionalWoodStorage);
         }
 
         private IEnumerator UnitProductionCoroutine()

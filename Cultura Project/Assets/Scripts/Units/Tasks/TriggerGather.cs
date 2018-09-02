@@ -8,6 +8,7 @@ namespace Cultura.Units.Tasks
 {
     public class TriggerGather : Conditional
     {
+        /*
         public SharedVector2 targetPos;
         private IGatherer gatherer;
 
@@ -24,5 +25,6 @@ namespace Cultura.Units.Tasks
             }
             return TaskStatus.Failure;
         }
+        */
     }
 }

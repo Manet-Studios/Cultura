@@ -8,11 +8,11 @@ namespace Cultura.Core
 {
     public class BuildingManager : MonoBehaviour
     {
-        [SerializeField]
-        private Registry buildingRegistry;
+        private Registry registry;
 
         private VillageManager villageManager;
         private SelectionManager selectionManager;
+
         private bool buildMode;
 
         [SerializeField]
@@ -42,6 +42,7 @@ namespace Cultura.Core
             mainCam = Camera.main;
             villageManager = VillageManager.Instance;
             selectionManager = SelectionManager.Instance;
+            registry = VillageManager.RegistryInstance;
         }
 
         // Update is called once per frame
@@ -94,7 +95,7 @@ namespace Cultura.Core
         {
             selectionManager.DisableSelection();
             blueprintTransform.gameObject.SetActive(true);
-            blueprintTransform.sprite = buildingRegistry.GetBuilding(selectedBuilding).BlueprintPrefab.GetComponent<SpriteRenderer>().sprite;
+            blueprintTransform.sprite = registry.BuildingRegistry[selectedBuilding].BlueprintPrefab.GetComponent<SpriteRenderer>().sprite;
         }
 
         private void StopBuildMode()
@@ -118,7 +119,7 @@ namespace Cultura.Core
 
         private void OnFindBuildPosition(Vector2 pos)
         {
-            IBuilding building = buildingRegistry.GetBuilding(selectedBuilding);
+            IBuilding building = registry.BuildingRegistry[selectedBuilding];
             Instantiate(building.BlueprintPrefab, blueprintTransform.transform.position, Quaternion.identity).Initialize(building);
             StopBuildMode();
         }
