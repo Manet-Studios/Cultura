@@ -28,6 +28,14 @@ namespace Cultura.Core
             }
         }
 
+        public bool AtMaxCapacity
+        {
+            get
+            {
+                return CurrentStorage >= StorageLimit;
+            }
+        }
+
         public event Action<int> UpdateSupplyLevelEventHandler;
 
         public event Action<StorageUnit> NewItemAddedEventHandler;

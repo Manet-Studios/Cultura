@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEditor;
-using UnityEngine;
 
 [InitializeOnLoad]
 public class AnchorToolsEditor : EditorWindow
@@ -74,7 +72,6 @@ public class AnchorToolsEditor : EditorWindow
     {
         currentRectTransform = UnityEditor.Selection.activeGameObject.GetComponent<RectTransform>();
         parentRectTransform = currentRectTransform.parent.gameObject.GetComponent<RectTransform>();
-
     }
 
     static private void CalculateCurrentXY()

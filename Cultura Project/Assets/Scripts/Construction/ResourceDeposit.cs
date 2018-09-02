@@ -9,7 +9,7 @@ namespace Cultura.Construction
     public class ResourceDeposit : Selectable
     {
         [SerializeField]
-        private int storedItem;
+        public int storedItemID;
 
         [SerializeField]
         private int quantity;
@@ -26,7 +26,7 @@ namespace Cultura.Construction
         public void Collect(Inventory inv, int amount)
         {
             int excess = 0;
-            inv.StoreItem(storedItem, amount, out excess);
+            inv.StoreItem(storedItemID, amount, out excess);
             quantity -= (amount - excess);
 
             if (quantity < 1)
