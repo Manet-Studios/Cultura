@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using BehaviorDesigner.Runtime;
+using Cultura.Construction;
 using Cultura.Core;
 using UnityEngine;
 
 namespace Cultura.Units.Commands
 {
-    public struct GatherCommand : ITransformCommand
+    public struct GatherCommand : IComponentCommand<Transform>
     {
         private BehaviorTree tree;
 
@@ -38,7 +39,7 @@ namespace Cultura.Units.Commands
         {
             get
             {
-                return CommandType.Transform;
+                return CommandType.Component;
             }
         }
 
@@ -49,7 +50,29 @@ namespace Cultura.Units.Commands
 
         public void OnRecieveInformation(Transform obj)
         {
-            tree.SendEvent<object, object>(CommandID, obj, (Vector2)obj.position);
+            tree.SetVariableValue("Abort Trigger", true);
+
+            tree.SendEvent<object>(CommandID, obj);
+        }
+
+        public bool SelectionCriteria(Transform transform)
+        {
+            return transform.GetComponent<ResourceDeposit>() != null;
+        }
+
+        public Transform SelectionTransformer(Transform obj)
+        {
+            return obj;
+        }
+
+        public void StartCommand()
+        {
+            SelectionManager.Instance.StartTargetedSelection(Target,
+                             new SelectionManager.SelectionInfo<Transform>(
+                                 OnRecieveInformation,
+                                 OnCancelCommand,
+                                 SelectionCriteria,
+                                 SelectionTransformer));
         }
     }
 }

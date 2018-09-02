@@ -67,15 +67,13 @@ namespace Cultura.Units.Modules
                 IPositionCommand positionCommand = (IPositionCommand)command;
                 Debug.Log("Assigned : " + positionCommand.CommandID);
 
-                SelectionManager.Instance.StartTargetedPositionSelection(positionCommand.OnRecieveInformation, positionCommand.OnCancelCommand);
+                SelectionManager.Instance.StartLocationSelection(new SelectionManager.LocationSelection(positionCommand.OnRecieveInformation, positionCommand.OnCancelCommand));
             }
-            else if (command.Type == CommandType.Transform)
+            else if (command.Type == CommandType.Component)
             {
-                ITransformCommand transformCommand = (ITransformCommand)command;
-                Debug.Log("Assigned : " + transformCommand.CommandID);
-
-                SelectionManager.Instance.StartTargetedSelection(transformCommand.Target, transformCommand.OnRecieveInformation,
-                    transformCommand.OnCancelCommand);
+                IComponentCommand<object> componentCommand = (IComponentCommand<object>)command;
+                Debug.Log("Assigned : " + componentCommand.CommandID);
+                componentCommand.StartCommand();
             }
         }
     }

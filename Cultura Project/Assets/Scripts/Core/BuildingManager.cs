@@ -62,7 +62,11 @@ namespace Cultura.Core
                 buildMode = false;
                 selectionManager.CancelSelection();
 
-                selectionManager.StartTargetedSelection(SelectionMode.Building, OnSelectBuildingToDemolish, OnCancelDemolish);
+                selectionManager.StartTargetedSelection(SelectionMode.Building,
+                    new SelectionManager.SelectionInfo<Transform>(OnSelectBuildingToDemolish,
+                    OnCancelDemolish,
+                    (obj) => obj.GetComponent<IBuilding>() != null,
+                    (t) => { return t; }));
             }
 
             #endregion Hotkeys

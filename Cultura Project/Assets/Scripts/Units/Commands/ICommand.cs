@@ -13,17 +13,23 @@ namespace Cultura.Units
     }
 
     public enum CommandType
-    { Position, Transform }
+    { Position, Component }
 
     public interface IPositionCommand : ICommand
     {
         void OnRecieveInformation(Vector2 pos);
     }
 
-    public interface ITransformCommand : ICommand
+    public interface IComponentCommand<T> : ICommand
     {
         SelectionMode Target { get; }
 
-        void OnRecieveInformation(Transform obj);
+        void StartCommand();
+
+        void OnRecieveInformation(T obj);
+
+        bool SelectionCriteria(Transform transform);
+
+        T SelectionTransformer(Transform obj);
     }
 }
