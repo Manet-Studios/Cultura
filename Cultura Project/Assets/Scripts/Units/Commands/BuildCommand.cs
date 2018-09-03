@@ -50,9 +50,7 @@ namespace Cultura.Units.Commands
 
         public void OnRecieveInformation(Transform obj)
         {
-            tree.SetVariableValue("Abort Trigger", true);
-
-            tree.SendEvent<object>(CommandID, obj);
+            SelectionManager.Instance.StartCoroutine(FrameDelay(obj));
         }
 
         public bool SelectionCriteria(Transform transform)
@@ -73,6 +71,13 @@ namespace Cultura.Units.Commands
                                              OnCancelCommand,
                                              SelectionCriteria,
                                              SelectionTransformer));
+        }
+
+        private IEnumerator FrameDelay(Transform obj)
+        {
+            tree.SetVariableValue("Abort Trigger", true);
+            yield return null;
+            tree.SendEvent<object>(CommandID, obj);
         }
     }
 }

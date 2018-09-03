@@ -157,6 +157,8 @@ namespace Cultura.Core
                     {
                         locationSelections[i].onSelectCallback(cursorPosition);
                     }
+                    locationSelections.Clear();
+
                     ResetCallbacks();
                 }
             }

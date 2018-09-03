@@ -25,6 +25,8 @@ namespace Cultura.Construction
 
         public void Collect(Inventory inv, int amount)
         {
+            if (quantity < 1) return;
+
             int excess = 0;
             inv.StoreItem(storedItemID, Mathf.Min(amount, quantity), out excess);
             excess = Mathf.Max(0, excess);

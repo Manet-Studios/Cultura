@@ -38,10 +38,13 @@ namespace Cultura.Units
         public void CancelPath()
         {
             if (followPathCoroutine != null) StopCoroutine(followPathCoroutine);
+            Debug.Log("Cancel Movement");
         }
 
         private IEnumerator FollowPath(Action completePathCallback)
         {
+            if (path.Length == 0) yield break;
+
             targetIndex = 0;
             Vector2 currentWaypoint = path[0];
 

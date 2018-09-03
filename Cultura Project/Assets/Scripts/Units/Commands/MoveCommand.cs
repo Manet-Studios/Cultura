@@ -46,8 +46,13 @@ namespace Cultura.Units.Commands
 
         public void OnRecieveInformation(Vector2 pos)
         {
-            Debug.Log("Move to " + pos);
+            SelectionManager.Instance.StartCoroutine(FrameDelay(pos));
+        }
 
+        private IEnumerator FrameDelay(Vector2 pos)
+        {
+            tree.SetVariableValue("Abort Trigger", true);
+            yield return null;
             tree.SendEvent<object>(CommandID, pos);
         }
     }
