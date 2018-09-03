@@ -1,20 +1,18 @@
 ﻿using Cultura.Core;
 using Sirenix.OdinInspector;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-namespace Cultura.Construction
+namespace Cultura.Construction.Modules
 {
     public class Shelter : MonoBehaviour, IBuildingModule
     {
+        public const int id = 0;
+        public int ID { get { return id; } }
+
         [TabGroup("Unit Production")]
         [SerializeField]
         private int unitCapacity;
-
-        [TabGroup("Construction")]
-        [SerializeField]
-        private ConstructionCosts constructionCost;
 
         [TabGroup("Unit Production")]
         [SerializeField]
@@ -29,27 +27,6 @@ namespace Cultura.Construction
         private Coroutine unitProductionCoroutine;
 
         #region Properties
-
-        public ConstructionCosts ConstructionCost
-        {
-            get
-            {
-                return constructionCost;
-            }
-
-            set
-            {
-                constructionCost = value;
-            }
-        }
-
-        public GameObject Prefab
-        {
-            get
-            {
-                return gameObject;
-            }
-        }
 
         public int UnitCapacity
         {
@@ -79,7 +56,7 @@ namespace Cultura.Construction
 
         #endregion Properties
 
-        public virtual void OnBuild()
+        public virtual void OnBuild(BuildingBase buildingBase)
         {
             villageManager = VillageManager.Instance;
             villageManager.UnitCountEventHandler += OnUnitCountUpdate;
@@ -94,7 +71,10 @@ namespace Cultura.Construction
             }
             else
             {
-                if (unitProductionCoroutine != null) StopCoroutine(unitProductionCoroutine);
+                if (unitProductionCoroutine != null)
+                {
+                    StopCoroutine(unitProductionCoroutine);
+                }
             }
         }
 

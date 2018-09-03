@@ -5,17 +5,6 @@ Shader "Custom/Sprite Outline" {
 		_MainTex("Base (RGB)", 2D) = "white" {}
 		_OutlineBaseColor("Outline Base Color", Color) = (1, 1, 1, 1)
 		_OutlineColor("Outline Color", Color) = (1, 1, 1, 1)
-		
-		[Toggle(UsePaletteColors)]
-        _UsePaletteColors ("Use Palette", Float) = 0
-
-
-
-		_OutlineBaseColor("Palette Color 1", Color) = (1, 1, 1, 1)
-		_OutlineBaseColor("Palette Color 2", Color) = (1, 1, 1, 1)
-		_OutlineBaseColor("Palette Color 3", Color) = (1, 1, 1, 1)
-		_OutlineBaseColor("Palette Color 1", Color) = (1, 1, 1, 1)
-
 	}
 		SubShader{
 		Tags{ "Queue" = "Transparent" "RenderType" = "Transparent" }

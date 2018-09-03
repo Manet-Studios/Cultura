@@ -1,8 +1,11 @@
-﻿namespace Cultura.Construction
+﻿namespace Cultura.Construction.Modules
 {
     public interface IBuildingModule
     {
-        void OnBuild();
+        int ID { get; }
+
+        void OnBuild(BuildingBase buildingBase);
+
         void OnDemolish();
     }
 }

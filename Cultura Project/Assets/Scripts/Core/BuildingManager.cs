@@ -1,7 +1,4 @@
 ﻿using Cultura.Construction;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Cultura.Core
@@ -53,8 +50,14 @@ namespace Cultura.Core
             if (Input.GetKeyDown(KeyCode.B))
             {
                 buildMode = !buildMode;
-                if (buildMode) StartBuildMode();
-                else StopBuildMode();
+                if (buildMode)
+                {
+                    StartBuildMode();
+                }
+                else
+                {
+                    StopBuildMode();
+                }
             }
 
             if (Input.GetKeyDown(KeyCode.D))
@@ -65,7 +68,7 @@ namespace Cultura.Core
                 selectionManager.StartTargetedSelection(SelectionMode.Building,
                     new SelectionManager.SelectionInfo<Transform>(OnSelectBuildingToDemolish,
                     OnCancelDemolish,
-                    (obj) => obj.GetComponent<IBuilding>() != null,
+                    (obj) => obj.GetComponent<Construction.Modules.BuildingBase>() != null,
                     (t) => { return t; }));
             }
 
@@ -99,7 +102,7 @@ namespace Cultura.Core
         {
             selectionManager.DisableSelection();
             blueprintTransform.gameObject.SetActive(true);
-            blueprintTransform.sprite = registry.BuildingRegistry[selectedBuilding].BlueprintPrefab.GetComponent<SpriteRenderer>().sprite;
+            blueprintTransform.sprite = registry.BuildingRegistry[selectedBuilding].GetComponent<SpriteRenderer>().sprite;
         }
 
         private void StopBuildMode()
@@ -117,14 +120,14 @@ namespace Cultura.Core
 
         private void OnSelectBuildingToDemolish(Transform obj)
         {
-            obj.GetComponent<Construction.IBuilding>().OnDemolish();
+            obj.GetComponent<Construction.Modules.BuildingBase>().Demolish();
             Destroy(obj.gameObject);
         }
 
         private void OnFindBuildPosition(Vector2 pos)
         {
-            IBuilding building = registry.BuildingRegistry[selectedBuilding];
-            Instantiate(building.BlueprintPrefab, blueprintTransform.transform.position, Quaternion.identity).Initialize(building);
+            BuildingBlueprint building = registry.BuildingRegistry[selectedBuilding];
+            Instantiate(building, blueprintTransform.transform.position, Quaternion.identity).Initialize();
             StopBuildMode();
         }
 

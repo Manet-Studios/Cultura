@@ -1,8 +1,6 @@
-﻿using Cultura.Core;
-using Sirenix.OdinInspector;
+﻿using Cultura.Construction.Modules;
+using Cultura.Core;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Cultura.Construction
@@ -10,10 +8,13 @@ namespace Cultura.Construction
     [RequireComponent(typeof(SpriteRenderer))]
     public class BuildingBlueprint : Selectable
     {
-        public GameObject linkedPrefab;
+        public BuildingBase linkedPrefab;
 
         [SerializeField]
         private int constructionPoints;
+
+        [SerializeField]
+        private int maxConstructionPoints;
 
         private Collider2D coll;
 
@@ -44,18 +45,30 @@ namespace Cultura.Construction
             set
             {
                 constructionPoints = value;
-                if (OnConstructionPointsUpdate != null) OnConstructionPointsUpdate(constructionPoints);
+                if (OnConstructionPointsUpdate != null)
+                {
+                    OnConstructionPointsUpdate(constructionPoints);
+                }
             }
         }
 
-        public int MaxConstructionPoints { get; set; }
+        public int MaxConstructionPoints
+        {
+            get
+            {
+                return maxConstructionPoints;
+            }
+
+            set
+            {
+                maxConstructionPoints = value;
+            }
+        }
 
         public event Action<int> OnConstructionPointsUpdate;
 
-        public void Initialize(IBuilding linkedBuilding)
+        public void Initialize()
         {
-            MaxConstructionPoints = linkedBuilding.ConstructionCost.constructionPoints;
-            linkedPrefab = (linkedBuilding as MonoBehaviour).gameObject;
             spriteRenderer = GetComponent<SpriteRenderer>();
             Navigation.Grid.Instance.SetPositionsWalkable(transform.position - spriteRenderer.bounds.extents * .95f, transform.position + spriteRenderer.bounds.extents * .95f, false);
         }
@@ -65,10 +78,10 @@ namespace Cultura.Construction
             ConstructionPoints += productivity;
             if (ConstructionPoints > MaxConstructionPoints)
             {
-                Instantiate(linkedPrefab, transform.position, Quaternion.identity);
-                Destroy(gameObject);
-
+                Instantiate(linkedPrefab, transform.position, Quaternion.identity).Build();
                 Navigation.Grid.Instance.SetPositionsWalkable(transform.position - spriteRenderer.bounds.extents * .95f, transform.position + spriteRenderer.bounds.extents * .95f, true);
+
+                Destroy(gameObject);
             }
         }
 

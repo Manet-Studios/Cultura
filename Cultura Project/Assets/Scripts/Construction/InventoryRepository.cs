@@ -1,13 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Cultura.Core;
+﻿using Cultura.Core;
 using Sirenix.OdinInspector;
 using Sirenix.Serialization;
-using UnityEngine;
 
 namespace Cultura.Construction
 {
-    public class InventoryRepository : SerializedMonoBehaviour, IRepository
+    public class InventoryRepository : SerializedMonoBehaviour
     {
         public bool depositInPlayerInventory;
 
@@ -25,7 +22,10 @@ namespace Cultura.Construction
 
         private void Start()
         {
-            if (depositInPlayerInventory) inventoryUsed = VillageManager.Instance.inventory;
+            if (depositInPlayerInventory)
+            {
+                inventoryUsed = VillageManager.Instance.inventory;
+            }
         }
     }
 }
