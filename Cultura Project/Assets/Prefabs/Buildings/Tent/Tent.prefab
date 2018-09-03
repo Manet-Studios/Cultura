@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 4599550726383078}
   - component: {fileID: 212422132615161220}
   - component: {fileID: 114985706274450630}
-  - component: {fileID: 114037122828233572}
   - component: {fileID: 60256757072792230}
   m_Layer: 11
   m_Name: Tent
@@ -102,36 +101,6 @@ PolygonCollider2D:
       - {x: 2.5, y: -2.4375}
       - {x: 2.5, y: 0.625}
       - {x: 0.875, y: 2.375}
---- !u!114 &114037122828233572
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1066349232285568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5767866fe2de9b549a3fe6fd78ca42de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes:
-    - Name: inventoryUsed
-      Entry: 7
-      Data: 0|Cultura.Core.Inventory, Assembly-CSharp
-    - Name: resourceDictionary
-      Entry: 6
-      Data: 
-    - Name: 
-      Entry: 8
-      Data: 
-  depositInPlayerInventory: 1
 --- !u!114 &114985706274450630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -143,16 +112,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b50c168df99b58459831cfe6e3fa884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serializationData:
-    SerializedFormat: 2
-    SerializedBytes: 
-    ReferencedUnityObjects: []
-    SerializedBytesString: 
-    Prefab: {fileID: 0}
-    PrefabModificationsReferencedUnityObjects: []
-    PrefabModifications: []
-    SerializationNodes: []
-  outlineable: 0
   unitCapacity: 2
   constructionCost:
     woodCost: 10
@@ -161,12 +120,6 @@ MonoBehaviour:
     constructionPoints: 100
   unitProductionTime: 240
   spawnPoint: {fileID: 4332271780407920}
-  additionalWoodStorage: 20
-  additionalStoneStorage: 20
-  additionalMetalStorage: 20
-  additionalFoodStorage: 20
-  blueprintPrefab: {fileID: 114709131823075664, guid: 12f34a35bc3d05e46b9dbade7c7f32ec,
-    type: 2}
 --- !u!212 &212422132615161220
 SpriteRenderer:
   m_ObjectHideFlags: 1

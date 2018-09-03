@@ -51,7 +51,7 @@ Shader "Custom/Sprite Outline" {
 			return _OutlineColor;
 		}
 
-	return col;
+	return col * i.color;
 	}
 
 		ENDCG
