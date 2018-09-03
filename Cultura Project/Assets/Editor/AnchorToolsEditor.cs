@@ -73,7 +73,6 @@ public class AnchorToolsEditor : EditorWindow
         if (UnityEditor.Selection.activeGameObject == null) return;
         currentRectTransform = UnityEditor.Selection.activeGameObject.GetComponent<RectTransform>();
         if (currentRectTransform != null)
-
             parentRectTransform = currentRectTransform.parent.gameObject.GetComponent<RectTransform>();
     }
 
