@@ -8,7 +8,11 @@ public class VillagerColorizer : MonoBehaviour
 
     Texture2D mColorSwapTex;
     Color[] spriteColors;
-    SpriteRenderer mSpriteRenderer;
+    SpriteRenderer renderer;
+    public Texture2D[] HairPalettes = new Texture2D[5];
+    public Texture2D[] SkinPalettes = new Texture2D[3];
+    public Texture2D[] ShirtPalettes = new Texture2D[2];
+    public Texture2D[] PantsPalettes = new Texture2D[2];
 
     public enum HairColor
     {
@@ -50,48 +54,13 @@ public class VillagerColorizer : MonoBehaviour
 
     private void Start()
     {
-        mSpriteRenderer = GetComponent<SpriteRenderer>();
+        renderer = GetComponent<SpriteRenderer>();
     }
 
     [Button]
-    void ChangeHair()
+    void UpdateSprite()
     {
-        SwapColor(SwapIndex.Outline, swapTo);
-    }
-
-    public void InitColorSwapTex()
-    {
-        Texture2D colorSwapTex = new Texture2D(256, 1, TextureFormat.RGBA32, false, false);
-        colorSwapTex.filterMode = FilterMode.Point;
-
-        for (int i = 0; i < colorSwapTex.width; ++i)
-            colorSwapTex.SetPixel(i, 0, new Color(0.0f, 0.0f, 0.0f, 0.0f));
-
-        colorSwapTex.Apply();
-
-        mSpriteRenderer.material.SetTexture("_SwapTex", colorSwapTex);
-
-        spriteColors = new Color[colorSwapTex.width];
-        mColorSwapTex = colorSwapTex;
-    }
-
-    public void SwapColor(SwapIndex index, Color color)
-    {
-        spriteColors[(int)index] = color;
-        mColorSwapTex.SetPixel((int)index, 0, color);
-    }
-
-    public enum SwapIndex
-    {
-        Outline = 246,
-        SkinPrim = 254,
-        SkinSec = 239,
-        HandPrim = 235,
-        HandSec = 204,
-        ShirtPrim = 62,
-        ShirtSec = 70,
-        ShoePrim = 253,
-        ShoeSec = 248,
-        Pants = 72,
+        renderer = GetComponent<SpriteRenderer>();
+        renderer.material.SetTexture("_HairPaletteTex", HairPalettes[(int)hair]);        
     }
 }
