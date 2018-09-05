@@ -47,7 +47,7 @@ namespace Cultura.Core
         {
             #region Hotkeys
 
-            if (Input.GetKeyDown(KeyCode.B))
+            /*if (Input.GetKeyDown(KeyCode.B))
             {
                 buildMode = !buildMode;
                 if (buildMode)
@@ -71,6 +71,7 @@ namespace Cultura.Core
                     (obj) => obj.GetComponent<Construction.Modules.BuildingBase>() != null,
                     (t) => { return t; }));
             }
+            */
 
             #endregion Hotkeys
 

@@ -1,26 +1,31 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace Cultura.UI
 {
-    [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(EventTrigger))]
     public class HotkeyButtonBind : MonoBehaviour
     {
         [SerializeField]
         private KeyCode hotkey;
 
-        private Button button;
+        private bool hasTrigger = false;
+
+        private EventTrigger button;
+
+        private EventSystem eventSystem;
 
         private void Start()
         {
-            button = GetComponent<Button>();
+            button = GetComponent<EventTrigger>();
+            eventSystem = EventSystem.current;
         }
 
         private void Update()
         {
             if (Input.GetKeyDown(hotkey))
             {
-                button.onClick.Invoke();
+                ExecuteEvents.Execute(button.gameObject, new PointerEventData(eventSystem), ExecuteEvents.pointerDownHandler);
             }
         }
     }
