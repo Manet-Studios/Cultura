@@ -99,8 +99,11 @@ namespace Cultura.Core
             }
         }
 
-        private void StartBuildMode()
+        public void StartBuildMode(int buildingToBuild)
         {
+            Debug.Log("Building");
+            buildMode = true;
+            selectedBuilding = buildingToBuild;
             selectionManager.DisableSelection();
             blueprintTransform.gameObject.SetActive(true);
             blueprintTransform.sprite = registry.BuildingRegistry[selectedBuilding].GetComponent<SpriteRenderer>().sprite;

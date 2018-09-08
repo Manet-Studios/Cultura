@@ -18,6 +18,7 @@ MonoBehaviour:
     - {fileID: 21300004, guid: e55034145c7636347be3d3bd64025ab2, type: 3}
     - {fileID: 21300000, guid: e55034145c7636347be3d3bd64025ab2, type: 3}
     - {fileID: 21300010, guid: e55034145c7636347be3d3bd64025ab2, type: 3}
+    - {fileID: 114709131823075664, guid: 12f34a35bc3d05e46b9dbade7c7f32ec, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -129,14 +130,26 @@ MonoBehaviour:
       Data: 
     - Name: BuildingRegistry
       Entry: 7
-      Data: 5|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[Cultura.Construction.IBuilding,
+      Data: 5|System.Collections.Generic.Dictionary`2[[System.Int32, mscorlib],[Cultura.Construction.BuildingBlueprint,
         Assembly-CSharp]], mscorlib
     - Name: comparer
       Entry: 9
       Data: 1
     - Name: 
       Entry: 12
+      Data: 1
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: 
+      Entry: 3
       Data: 0
+    - Name: 
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
     - Name: 
       Entry: 13
       Data: 

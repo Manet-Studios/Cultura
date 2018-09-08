@@ -1,7 +1,6 @@
 ﻿using Sirenix.OdinInspector;
 using Sirenix.Serialization;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -21,10 +20,17 @@ namespace Cultura.Core
         public Inventory inventory;
 
         [SerializeField]
+        private int baseInventoryAmount;
+
+        [SerializeField]
         private int unitCount;
 
         [SerializeField]
         private int unitCapacity;
+
+        public int CurrentCulturePoints { get; set; }
+
+        public List<int> unlockedBuildings = new List<int>();
 
         private bool requireAdditionalUnits = false;
 
@@ -74,10 +80,32 @@ namespace Cultura.Core
 
         public event Action<bool> UnitCountEventHandler;
 
+        public event Action<int> UnlockBuildingEventHandler;
+
         private void Awake()
         {
             Instance = this;
             RegistryInstance = registry;
+        }
+
+        public void ChangeStorageCapacity(int amount)
+        {
+            inventory.StorageLimit += amount;
+            inventory.StorageLimit = Mathf.Max(baseInventoryAmount);
+        }
+
+        public bool CanUnlockBuilding(int buildingID)
+        {
+            return !unlockedBuildings.Contains(buildingID) && CurrentCulturePoints >= RegistryInstance.BuildingRegistry[buildingID].unlockPrice;
+        }
+
+        public void UnlockBuilding(int buildingID)
+        {
+            if (CanUnlockBuilding(buildingID))
+            {
+                CurrentCulturePoints -= RegistryInstance.BuildingRegistry[buildingID].unlockPrice;
+                unlockedBuildings.Add(buildingID);
+            }
         }
     }
 }

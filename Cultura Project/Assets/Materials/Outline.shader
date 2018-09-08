@@ -6,15 +6,8 @@ Shader "Custom/Sprite Outline" {
 		_OutlineBaseColor("Outline Base Color", Color) = (1, 1, 1, 1)
 		_OutlineColor("Outline Color", Color) = (1, 1, 1, 1)
 		
-		[Toggle(UsePaletteColors)]
-        _UsePaletteColors ("Use Palette", Float) = 0
 
 
-
-		_OutlineBaseColor("Palette Color 1", Color) = (1, 1, 1, 1)
-		_OutlineBaseColor("Palette Color 2", Color) = (1, 1, 1, 1)
-		_OutlineBaseColor("Palette Color 3", Color) = (1, 1, 1, 1)
-		_OutlineBaseColor("Palette Color 1", Color) = (1, 1, 1, 1)
 
 	}
 		SubShader{
@@ -58,11 +51,11 @@ Shader "Custom/Sprite Outline" {
 	{
 		fixed4 col = tex2D(_MainTex,i.uv);
 		col.rgb *= col.a;
-		if (col.r == _OutlineBaseColor.r) {
-			return _OutlineColor;
+		if (col.r == _OutlineBaseColor.r ) {
+			return _OutlineColor * i.color.a;
 		}
 
-	return col * i.color;
+	return col * i.color * i.color.a ;
 	}
 
 		ENDCG

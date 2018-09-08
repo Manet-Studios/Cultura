@@ -5,10 +5,23 @@ using UnityEngine;
 
 namespace Cultura.Construction
 {
+    public enum BuildingCategory
+    { General, Resource, Culture }
+
     [RequireComponent(typeof(SpriteRenderer))]
     public class BuildingBlueprint : Selectable
     {
         public BuildingBase linkedPrefab;
+
+        [Range(1, 3)]
+        public int tier;
+
+        public BuildingCategory type;
+
+        public int unlockPrice;
+
+        [TextArea]
+        public string description;
 
         [SerializeField]
         private int constructionPoints;
@@ -16,7 +29,8 @@ namespace Cultura.Construction
         [SerializeField]
         private int maxConstructionPoints;
 
-        private Collider2D coll;
+        public string buildingName;
+        public string costString;
 
         public bool UnderConstruction
         {

@@ -20,7 +20,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4599550726383078}
   - component: {fileID: 212422132615161220}
+  - component: {fileID: 114030162500464718}
   - component: {fileID: 114985706274450630}
+  - component: {fileID: 114461389358838706}
   - component: {fileID: 60256757072792230}
   m_Layer: 11
   m_Name: Tent
@@ -40,7 +42,7 @@ GameObject:
   m_Layer: 11
   m_Name: Spawn Point
   m_TagString: Untagged
-  m_Icon: {fileID: 2974397684917235467, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -101,6 +103,40 @@ PolygonCollider2D:
       - {x: 2.5, y: -2.4375}
       - {x: 2.5, y: 0.625}
       - {x: 0.875, y: 2.375}
+--- !u!114 &114030162500464718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1066349232285568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc2c143a08e40ad4998b41096634afe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114461389358838706
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1066349232285568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce118629cfbc90d42a0261d9ca7b3972, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes: []
+  additionalStorage: 20
+  demoCondition:
+    message: 
 --- !u!114 &114985706274450630
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -112,12 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b50c168df99b58459831cfe6e3fa884, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unitCapacity: 2
-  constructionCost:
-    woodCost: 10
-    stoneCost: 0
-    metalCost: 0
-    constructionPoints: 100
+  unitCapacity: 5
   unitProductionTime: 240
   spawnPoint: {fileID: 4332271780407920}
 --- !u!212 &212422132615161220

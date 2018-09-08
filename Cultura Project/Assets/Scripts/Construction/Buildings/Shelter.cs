@@ -5,6 +5,7 @@ using UnityEngine;
 
 namespace Cultura.Construction.Modules
 {
+    [RequireComponent(typeof(BuildingBase))]
     public class Shelter : MonoBehaviour, IBuildingModule
     {
         public const int id = 0;

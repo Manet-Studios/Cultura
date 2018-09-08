@@ -93,8 +93,17 @@ MonoBehaviour:
     PrefabModifications: []
     SerializationNodes: []
   outlineable: 0
-  linkedPrefab: {fileID: 0}
+  linkedPrefab: {fileID: 114030162500464718, guid: cc4b08ecb9e7cea4199d4d738f88fc1c,
+    type: 2}
+  tier: 1
+  type: 0
+  unlockPrice: 0
+  description: 'Test Desc
+
+'
   constructionPoints: 0
+  maxConstructionPoints: 50
+  buildingName: Tent
 --- !u!212 &212168294288828222
 SpriteRenderer:
   m_ObjectHideFlags: 1
