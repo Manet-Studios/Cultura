@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using Cultura.Core;
+using System.Collections;
 using TMPro;
-using Cultura.Core;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace Cultura.UI
 {
@@ -37,17 +36,30 @@ namespace Cultura.UI
             registry = VillageManager.RegistryInstance;
         }
 
+        private void Start()
+        {
+            linkedStorageUnit = null;
+        }
+
         private void OnEnable()
         {
-            if (linkedStorageUnit == null || linkedStorageUnit.Quantity == 0) thumbnailImage.color = Color.clear;
+            if (linkedStorageUnit == null || linkedStorageUnit.Quantity == 0)
+            {
+                thumbnailImage.color = Color.clear;
+            }
         }
 
         public void Initialize(Inventory.StorageUnit storageUnit)
         {
+            Debug.Log("Initialized");
+
             linkedStorageUnit = storageUnit;
             thumbnailImage.color = Color.white;
 
-            if (linkedStorageUnit == null || linkedStorageUnit.Quantity == 0) thumbnailImage.color = Color.clear;
+            if (linkedStorageUnit == null)
+            {
+                thumbnailImage.color = Color.clear;
+            }
 
             linkedStorageUnit.OnQuantityUpdate += OnSlotQuantityUpdate;
 
@@ -56,6 +68,9 @@ namespace Cultura.UI
             nameTooltipText.text = storedItem.name;
             thumbnailImage.sprite = storedItem.icon;
             amountText.text = linkedStorageUnit.Quantity.ToString();
+
+            thumbnailImage.color = Color.white;
+
             amountText.color = Color.white;
         }
 
@@ -72,14 +87,26 @@ namespace Cultura.UI
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (linkedStorageUnit == null) return;
-            if (tooltipAppearanceCoroutine != null) StopCoroutine(tooltipAppearanceCoroutine);
+            if (linkedStorageUnit == null)
+            {
+                return;
+            }
+
+            if (tooltipAppearanceCoroutine != null)
+            {
+                StopCoroutine(tooltipAppearanceCoroutine);
+            }
+
             tooltipAppearanceCoroutine = StartCoroutine(TooltipAppearanceDelay());
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if (tooltipAppearanceCoroutine != null) StopCoroutine(tooltipAppearanceCoroutine);
+            if (tooltipAppearanceCoroutine != null)
+            {
+                StopCoroutine(tooltipAppearanceCoroutine);
+            }
+
             tooltipObject.SetActive(false);
         }
 

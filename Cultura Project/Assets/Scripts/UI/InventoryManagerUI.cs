@@ -1,11 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Cultura.Core;
 using System.Linq;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
-using Cultura.Core;
-using System;
+using UnityEngine;
 
 namespace Cultura.UI
 {
@@ -27,6 +23,8 @@ namespace Cultura.UI
             villageManager.inventory.UpdateSupplyLevelEventHandler += OnSupplyUpdate;
             villageManager.inventory.NewItemAddedEventHandler += OnItemAdded;
             villageManager.inventory.ItemRemovedEventHandler += OnItemRemoved;
+
+            gameObject.SetActive(false);
         }
 
         private void OnItemRemoved(Inventory.StorageUnit obj)
@@ -36,11 +34,19 @@ namespace Cultura.UI
 
         private void OnItemAdded(Inventory.StorageUnit obj)
         {
-            inventorySlotUIs.First(slot => slot.linkedStorageUnit == null).Initialize(obj);
+            Debug.Log(obj.StoredItemID + " : " + obj.Quantity + " added");
+            InventorySlotUI slotUI = inventorySlotUIs.FirstOrDefault(slot => slot.linkedStorageUnit == null);
+            if (slotUI != null)
+            {
+                Debug.Log("Initialized SLot");
+                slotUI.Initialize(obj);
+            }
         }
 
         private void OnSupplyUpdate(int storageAmount)
         {
+            Debug.Log("Supply Update");
+
             storageQuantityText.text = storageAmount + "/" + villageManager.inventory.StorageLimit;
         }
     }

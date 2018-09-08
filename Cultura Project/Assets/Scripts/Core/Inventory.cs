@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +25,11 @@ namespace Cultura.Core
             set
             {
                 _currentStorage = value;
+
+                if (UpdateSupplyLevelEventHandler != null)
+                {
+                    UpdateSupplyLevelEventHandler(_currentStorage);
+                }
             }
         }
 
@@ -80,8 +86,12 @@ namespace Cultura.Core
             {
                 StorageUnit newUnit = new StorageUnit();
                 newUnit.StoredItemID = itemID;
+
+                Debug.Log("Why isn't this working?");
                 if (NewItemAddedEventHandler != null)
                 {
+                    Debug.Log("Why isn't this working2?");
+
                     NewItemAddedEventHandler(newUnit);
                 }
 
@@ -127,9 +137,23 @@ namespace Cultura.Core
         [System.Serializable]
         public class StorageUnit
         {
+            [ShowInInspector]
             private int _quantity;
 
-            public int StoredItemID { get; set; }
+            [ShowInInspector]
+            private int _storedItemID;
+
+            public int StoredItemID
+            {
+                get
+                {
+                    return _storedItemID;
+                }
+                set
+                {
+                    _storedItemID = value;
+                }
+            }
 
             public int Quantity
             {
