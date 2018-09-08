@@ -90,7 +90,7 @@ namespace Cultura.Construction
         public void Build(int productivity)
         {
             ConstructionPoints += productivity;
-            if (ConstructionPoints > MaxConstructionPoints)
+            if (ConstructionPoints >= MaxConstructionPoints)
             {
                 Instantiate(linkedPrefab, transform.position, Quaternion.identity).Build();
                 Navigation.Grid.Instance.SetPositionsWalkable(transform.position - spriteRenderer.bounds.extents * .95f, transform.position + spriteRenderer.bounds.extents * .95f, true);

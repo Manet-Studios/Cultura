@@ -1,33 +1,31 @@
-﻿using BehaviorDesigner.Runtime.Tasks;
-using BehaviorDesigner.Runtime;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using BehaviorDesigner.Runtime;
+using BehaviorDesigner.Runtime.Tasks;
+using Cultura.Units.Modules;
 
 namespace Cultura.Units.Tasks
 {
-    public class AssignBlueprint : Action
+    public class AssignBlueprint : VillagerAction
     {
-        /* private IBuilder builder;
+        private BuilderModule builder;
 
-         public SharedTransform target;
-         public SharedVector2 targetPosition;
+        public SharedTransform target;
+        public SharedVector2 targetPosition;
 
-         public override void OnAwake()
-         {
-             builder = transform.GetComponent<IBuilder>();
-         }
+        public override void OnStart()
+        {
+            builder = baseModule.GetModule<BuilderModule>(ModuleID.Builder);
+        }
 
-         public override TaskStatus OnUpdate()
-         {
-             if (target.Value != null)
-             {
-                 builder.Blueprint = target.Value.GetComponent<Construction.BuildingBlueprint>();
-                 targetPosition.Value = target.Value.position;
-                 return TaskStatus.Success;
-             }
+        public override TaskStatus OnUpdate()
+        {
+            if (target.Value != null)
+            {
+                builder.TargetBlueprint = target.Value.GetComponent<Construction.BuildingBlueprint>();
+                targetPosition.Value = target.Value.position;
+                return TaskStatus.Success;
+            }
 
-             return TaskStatus.Failure;
-         }*/
+            return TaskStatus.Failure;
+        }
     }
 }

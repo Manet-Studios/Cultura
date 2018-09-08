@@ -1,14 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
-using Sirenix.OdinInspector;
 
 public class VillagerColorizer : MonoBehaviour
 {
-
-    Texture2D mColorSwapTex;
-    Color[] spriteColors;
-    SpriteRenderer renderer;
+    private Texture2D mColorSwapTex;
+    private Color[] spriteColors;
+    private SpriteRenderer renderer;
     public Texture2D[] HairPalettes = new Texture2D[5];
     public Texture2D[] SkinPalettes = new Texture2D[3];
     public Texture2D[] ShirtPalettes = new Texture2D[2];
@@ -42,12 +39,12 @@ public class VillagerColorizer : MonoBehaviour
         Dark
     }
 
-    [SerializeField] HairColor hair = HairColor.Blue;
-    [SerializeField] SkinColor skin = SkinColor.Light;
-    [SerializeField] ShirtColor shirt = ShirtColor.Brown;
-    [SerializeField] PantsColor pants = PantsColor.Dark;
+    [SerializeField] private HairColor hair = HairColor.Blue;
+    [SerializeField] private SkinColor skin = SkinColor.Light;
+    [SerializeField] private ShirtColor shirt = ShirtColor.Brown;
+    [SerializeField] private PantsColor pants = PantsColor.Dark;
     public Color swapTo;
-    private Color[] hairShade = { new Color(246,202,159,255) };
+    private Color[] hairShade = { new Color(246, 202, 159, 255) };
     private Color[] skinShade;
     private Color[] shirtShade;
     private Color[] pantsShade;
@@ -58,9 +55,9 @@ public class VillagerColorizer : MonoBehaviour
     }
 
     [Button]
-    void UpdateSprite()
+    private void UpdateSprite()
     {
         renderer = GetComponent<SpriteRenderer>();
-        renderer.material.SetTexture("_HairPaletteTex", HairPalettes[(int)hair]);        
+        renderer.sharedMaterial.SetTexture("_HairPaletteTex", HairPalettes[(int)hair]);
     }
 }

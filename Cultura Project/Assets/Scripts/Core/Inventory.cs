@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Sirenix.Serialization;
 
 namespace Cultura.Core
 {
@@ -82,7 +80,10 @@ namespace Cultura.Core
             {
                 StorageUnit newUnit = new StorageUnit();
                 newUnit.StoredItemID = itemID;
-                if (NewItemAddedEventHandler != null) NewItemAddedEventHandler(newUnit);
+                if (NewItemAddedEventHandler != null)
+                {
+                    NewItemAddedEventHandler(newUnit);
+                }
 
                 itemsInInventory.Add(itemID, newUnit);
             }
@@ -94,19 +95,29 @@ namespace Cultura.Core
 
         public int RemoveItem(int itemID, int quantity)
         {
+            Debug.Log("Item  " + itemID + " had " + quantity + "removed");
+
             if (quantity < 0)
             {
                 throw new Exception("Tried to withdraw negative amount");
             }
 
-            if (!itemsInInventory.ContainsKey(itemID)) return 0;
+            if (!itemsInInventory.ContainsKey(itemID))
+            {
+                return 0;
+            }
 
             int removableAmount = Mathf.Min(quantity, itemsInInventory[itemID].Quantity);
             itemsInInventory[itemID].Quantity -= removableAmount;
-
+            CurrentStorage -= removableAmount;
+            Debug.Log(removableAmount);
             if (itemsInInventory[itemID].Quantity == 0)
             {
-                if (ItemRemovedEventHandler != null) ItemRemovedEventHandler(itemsInInventory[itemID]);
+                if (ItemRemovedEventHandler != null)
+                {
+                    ItemRemovedEventHandler(itemsInInventory[itemID]);
+                }
+
                 itemsInInventory.Remove(itemID);
             }
 
@@ -129,7 +140,10 @@ namespace Cultura.Core
                 set
                 {
                     _quantity = value;
-                    if (OnQuantityUpdate != null) OnQuantityUpdate(_quantity);
+                    if (OnQuantityUpdate != null)
+                    {
+                        OnQuantityUpdate(_quantity);
+                    }
                 }
             }
 

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114985706274450630}
   - component: {fileID: 114461389358838706}
   - component: {fileID: 60256757072792230}
+  - component: {fileID: 114138552105611314}
   m_Layer: 11
   m_Name: Tent
   m_TagString: Building
@@ -114,6 +115,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc2c143a08e40ad4998b41096634afe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114138552105611314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1066349232285568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5767866fe2de9b549a3fe6fd78ca42de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  serializationData:
+    SerializedFormat: 2
+    SerializedBytes: 
+    ReferencedUnityObjects: []
+    SerializedBytesString: 
+    Prefab: {fileID: 0}
+    PrefabModificationsReferencedUnityObjects: []
+    PrefabModifications: []
+    SerializationNodes:
+    - Name: inventoryUsed
+      Entry: 6
+      Data: 
+  depositInPlayerInventory: 1
 --- !u!114 &114461389358838706
 MonoBehaviour:
   m_ObjectHideFlags: 1

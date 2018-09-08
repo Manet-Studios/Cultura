@@ -1,5 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Cultura.Construction;
+using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Cultura.Units.Modules
@@ -14,21 +15,54 @@ namespace Cultura.Units.Modules
             }
         }
 
+        [SerializeField]
+        private float buildSpeed;
+
+        [SerializeField]
+        private int buildAmount;
+
         private VillagerBase villagerBase;
+        public BuildingBlueprint TargetBlueprint { get; set; }
+
+        private Action onCompleteBuildCallback;
+
+        private Coroutine buildingCoroutine;
 
         public void Initialize(VillagerBase villagerBase)
         {
             this.villagerBase = villagerBase;
         }
 
-        // Use this for initialization
-        private void Start()
+        public bool TryStartProcess(Action onCompleteCallback)
         {
+            StopProcess();
+
+            if (TargetBlueprint == null)
+            {
+                return false;
+            }
+            onCompleteBuildCallback = onCompleteCallback;
+            buildingCoroutine = StartCoroutine(BuildProcess());
+            return true;
         }
 
-        // Update is called once per frame
-        private void Update()
+        public void StopProcess()
         {
+            onCompleteBuildCallback = null;
+            if (buildingCoroutine != null)
+            {
+                StopCoroutine(buildingCoroutine);
+            }
+        }
+
+        private IEnumerator BuildProcess()
+        {
+            while (TargetBlueprint != null && TargetBlueprint.UnderConstruction)
+            {
+                yield return new WaitForSeconds(1f / buildSpeed);
+                TargetBlueprint.Build(buildAmount);
+            }
+            onCompleteBuildCallback();
         }
     }
 }
